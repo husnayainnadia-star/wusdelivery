@@ -42,18 +42,18 @@ export default function SignInPage() {
   };
 
   return (
-    <main className="min-h-screen bg-white flex flex-col justify-between">
+    <div className="min-h-screen bg-white flex flex-col relative select-none">
       {/* Mobile Status Bar */}
-      <MobileStatusBar variant="dark" />
+      <MobileStatusBar variant="dark" className="px-5" />
 
-      <div className="flex-1 px-7 pt-4 pb-8 flex flex-col justify-center max-w-sm mx-auto w-full">
+      <div className="flex-1 px-6 py-6 flex flex-col justify-center max-w-[360px] mx-auto w-full">
         {/* Top Logo */}
-        <div className="flex justify-center mb-5">
+        <div className="flex justify-center mb-6">
           <WUSLogo size="lg" variant="blue" showSubtitle={true} />
         </div>
 
         {/* Heading */}
-        <h1 className="text-xl font-bold text-[#171717] text-center mb-6">
+        <h1 className="text-xl font-bold text-[#171717] text-center mb-6 tracking-tight">
           Log in to your Account
         </h1>
 
@@ -187,6 +187,6 @@ export default function SignInPage() {
           </Link>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

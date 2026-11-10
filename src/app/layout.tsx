@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import './tailwind-built.css';
 import './globals.css';
 import { CartProvider } from '@/context/CartContext';
 import { AuthProvider } from '@/context/AuthContext';
