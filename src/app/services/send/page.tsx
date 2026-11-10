@@ -1,60 +1,117 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import { ChevronLeft } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { ChevronLeft, MapPin, Package } from 'lucide-react';
+import MobileStatusBar from '@/components/shared/MobileStatusBar';
 
 export default function WUSSendPage() {
-  const [form, setForm] = useState({ senderName: '', senderPhone: '', recipientName: '', recipientPhone: '', from: '', to: '', desc: '', weight: '' });
-  const [booked, setBooked] = useState(false);
-  const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement>) => setForm(f => ({ ...f, [k]: e.target.value }));
+  const router = useRouter();
+  const [sender, setSender] = useState('Jl. Melati No.12, Surakarta');
+  const [recipient, setRecipient] = useState('');
+  const [pkgType, setPkgType] = useState('Dokumen');
+  const [estimated, setEstimated] = useState<number | null>(null);
 
-  const fields = [
-    { section: 'Pengirim', items: [{ key: 'senderName', label: 'Nama Pengirim', placeholder: 'Nama lengkap' }, { key: 'senderPhone', label: 'No. Telepon', placeholder: '08xx' }] },
-    { section: 'Penerima', items: [{ key: 'recipientName', label: 'Nama Penerima', placeholder: 'Nama lengkap' }, { key: 'recipientPhone', label: 'No. Telepon', placeholder: '08xx' }] },
-    { section: 'Pengiriman', items: [{ key: 'from', label: 'Alamat Pengambilan', placeholder: 'Alamat lengkap' }, { key: 'to', label: 'Alamat Tujuan', placeholder: 'Alamat tujuan' }, { key: 'desc', label: 'Deskripsi Paket', placeholder: 'Isi paket' }, { key: 'weight', label: 'Berat (kg)', placeholder: 'Misal: 2' }] },
-  ];
+  const calculate = () => {
+    if (sender && recipient) {
+      setEstimated(9000);
+    }
+  };
 
   return (
-    <main className="min-h-screen bg-[#F5F6FA]">
-      <div className="bg-[#EF4444] px-4 pt-12 pb-6 rounded-b-3xl">
-        <div className="flex items-center gap-3">
-          <Link href="/"><div className="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center"><ChevronLeft size={20} className="text-white" /></div></Link>
+    <div className="min-h-screen bg-[#F5F6FA] flex flex-col relative pb-28 select-none">
+      {/* ── STATUS BAR ── */}
+      <MobileStatusBar variant="dark" className="page-px px-5" />
+
+      {/* ── HEADER ── */}
+      <div className="bg-white page-px px-5 pt-2 pb-3.5 flex items-center justify-between border-b border-gray-100">
+        <button
+          onClick={() => router.push('/')}
+          className="w-9 h-9 bg-gray-50 rounded-xl flex items-center justify-center text-gray-700 active:scale-95"
+        >
+          <ChevronLeft size={20} />
+        </button>
+        <div className="flex items-center gap-1.5">
+          <Package size={18} className="text-[#EF4444]" />
+          <h1 className="text-base font-extrabold text-[#171717]">WUSSend</h1>
+        </div>
+        <div className="w-9" />
+      </div>
+
+      {/* ── CONTENT ── */}
+      <div className="flex-1 min-h-0 overflow-y-auto page-px px-5 pt-4 space-y-4 pb-8">
+        {/* Banner */}
+        <div className="bg-gradient-to-r from-red-500 to-rose-600 rounded-2xl p-4 text-white shadow-sm flex items-center justify-between">
           <div>
-            <h1 className="text-white text-lg font-bold">WUSSend</h1>
-            <p className="text-white/70 text-xs">Kirim paket ke seluruh kota</p>
+            <h2 className="text-sm font-bold">Kirim Paket Kilat Se-Kota</h2>
+            <p className="text-xs text-white/80 mt-0.5">Paket dijemput dan diantar langsung ke penerima</p>
           </div>
-          <span className="ml-auto text-4xl">📨</span>
+          <span className="text-3xl">📨</span>
+        </div>
+
+        {/* Form Alamat Pengirim & Penerima */}
+        <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm space-y-3">
+          <h3 className="text-xs font-bold text-[#171717]">Informasi Pengiriman</h3>
+
+          <div>
+            <label className="text-[11px] font-semibold text-gray-500 mb-1 block">Alamat Pengirim</label>
+            <div className="flex items-center bg-[#F8FAFC] border border-gray-200 rounded-xl px-3 py-2.5 gap-2.5">
+              <MapPin size={15} className="text-red-500 shrink-0" />
+              <input
+                value={sender}
+                onChange={e => setSender(e.target.value)}
+                placeholder="Alamat penjemputan paket"
+                className="flex-1 text-xs outline-none bg-transparent text-gray-700"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="text-[11px] font-semibold text-gray-500 mb-1 block">Alamat Penerima</label>
+            <div className="flex items-center bg-[#F8FAFC] border border-gray-200 rounded-xl px-3 py-2.5 gap-2.5">
+              <MapPin size={15} className="text-red-500 shrink-0" />
+              <input
+                value={recipient}
+                onChange={e => setRecipient(e.target.value)}
+                placeholder="Alamat penerima paket"
+                className="flex-1 text-xs outline-none bg-transparent text-gray-700"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Jenis Paket */}
+        <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm space-y-3">
+          <h3 className="text-xs font-bold text-[#171717]">Kategori Paket</h3>
+
+          <div className="grid grid-cols-3 gap-2">
+            {['Dokumen', 'Makanan', 'Barang Kecil'].map(t => {
+              const active = pkgType === t;
+              return (
+                <button
+                  key={t}
+                  onClick={() => setPkgType(t)}
+                  className={`py-2 px-1 text-center rounded-xl text-xs font-bold transition-all ${
+                    active ? 'bg-red-500 text-white shadow-xs' : 'bg-gray-100 text-gray-600'
+                  }`}
+                >
+                  {t}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      {booked ? (
-        <div className="px-4 pt-10 text-center">
-          <span className="text-6xl">📬</span>
-          <h2 className="text-xl font-black text-[#171717] mt-4 mb-2">Paket Dijadwalkan!</h2>
-          <p className="text-sm text-gray-500 mb-4">Kurir akan mengambil paketmu segera.</p>
-          <Link href="/"><button className="w-full bg-[#EF4444] text-white py-4 rounded-2xl font-bold text-sm">Kembali ke Beranda</button></Link>
-        </div>
-      ) : (
-        <div className="px-4 pt-5 space-y-3">
-          {fields.map(({ section, items }) => (
-            <div key={section} className="bg-white rounded-2xl p-4 shadow-sm">
-              <h3 className="font-bold text-[#171717] mb-3">{section}</h3>
-              {items.map(({ key, label, placeholder }) => (
-                <div key={key} className="mb-3 last:mb-0">
-                  <label className="text-xs font-semibold text-gray-500 mb-1 block">{label}</label>
-                  <input value={form[key as keyof typeof form]} onChange={set(key)} placeholder={placeholder}
-                    className="w-full bg-[#F5F6FA] rounded-xl px-4 py-3 text-sm outline-none text-gray-700" />
-                </div>
-              ))}
-            </div>
-          ))}
-          <button onClick={() => setBooked(true)} className="w-full bg-[#EF4444] text-white py-4 rounded-2xl font-bold text-sm shadow-lg shadow-red-300">
-            Buat Pesanan WUSSend
-          </button>
-          <div className="h-4" />
-        </div>
-      )}
-    </main>
+      {/* ── BOTTOM CTA ── */}
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-5 py-3.5 bg-white border-t border-gray-100 z-50">
+        <button
+          onClick={calculate}
+          className="w-full bg-[#EF4444] hover:bg-[#DC2626] active:scale-[0.98] text-white font-bold py-3.5 rounded-full text-sm transition-all shadow-md shadow-red-500/25"
+        >
+          {estimated ? `Pesan WUSSend • Rp ${estimated.toLocaleString('id-ID')}` : 'Cek Biaya Ongkir'}
+        </button>
+      </div>
+    </div>
   );
 }

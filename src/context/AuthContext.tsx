@@ -44,17 +44,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<AuthState>({ user: null, isAuthenticated: false, isLoading: true });
 
   useEffect(() => {
-    try {
-      const session = sessionStorage.getItem(DEMO_SESSION_KEY);
-      if (session) {
-        const user = JSON.parse(session) as User;
-        setState({ user, isAuthenticated: true, isLoading: false });
-      } else {
+    let active = true;
+    Promise.resolve().then(() => {
+      if (!active) return;
+      try {
+        const session = sessionStorage.getItem(DEMO_SESSION_KEY);
+        if (session) {
+          const user = JSON.parse(session) as User;
+          setState({ user, isAuthenticated: true, isLoading: false });
+        } else {
+          setState(s => ({ ...s, isLoading: false }));
+        }
+      } catch {
         setState(s => ({ ...s, isLoading: false }));
       }
-    } catch {
-      setState(s => ({ ...s, isLoading: false }));
-    }
+    });
+    return () => {
+      active = false;
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {
