@@ -115,7 +115,7 @@ export default function CheckoutPage() {
       {/* ── CONTENT ── */}
       <main className="flex-1 min-h-0 overflow-y-auto px-4 pt-3.5 space-y-3.5 pb-8">
         {/* 1. Alamat Pengiriman (Gojek Style) */}
-        <div className="bg-white rounded-3xl p-4 border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)] space-y-2">
+        <div className="bg-white rounded-3xl p-4 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.03)] space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-black text-gray-400 uppercase tracking-wider flex items-center gap-1">
               <MapPin size={13} className="text-[#193CA5]" /> Alamat Pengiriman
@@ -134,7 +134,7 @@ export default function CheckoutPage() {
         </div>
 
         {/* 2. Ringkasan Pesanan */}
-        <div className="bg-white rounded-3xl p-4 border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)] space-y-2.5">
+        <div className="bg-white rounded-3xl p-4 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.03)] space-y-2.5">
           <h2 className="text-xs font-black text-[#0F172A] pb-2 border-b border-gray-100">
             Ringkasan Menu
           </h2>
@@ -153,7 +153,7 @@ export default function CheckoutPage() {
         </div>
 
         {/* 3. Metode Pembayaran (Gojek Style) */}
-        <div className="bg-white rounded-3xl p-4 border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)] space-y-2.5">
+        <div className="bg-white rounded-3xl p-4 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.03)] space-y-2.5">
           <h2 className="text-xs font-black text-[#0F172A] pb-2 border-b border-gray-100">
             Metode Pembayaran
           </h2>
@@ -215,7 +215,7 @@ export default function CheckoutPage() {
         </div>
 
         {/* 4. Rincian Biaya */}
-        <div className="bg-white rounded-3xl p-4 border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)] space-y-2 text-xs text-gray-600">
+        <div className="bg-white rounded-3xl p-4 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.03)] space-y-2 text-xs text-gray-600">
           <div className="flex items-center justify-between">
             <span>Subtotal Menu</span>
             <span className="font-bold text-gray-900">{fmt(subtotal)}</span>
@@ -237,7 +237,7 @@ export default function CheckoutPage() {
       </main>
 
       {/* ── FIXED BOTTOM CTA (Gojek Style) ── */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-4 py-3 bg-white border-t border-gray-150 z-50 shadow-lg">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-4 py-3 bg-white border-t border-gray-200 z-50 shadow-lg">
         <button
           onClick={handleOrder}
           disabled={loading}

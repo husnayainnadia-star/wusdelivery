@@ -77,7 +77,7 @@ export default function PromoPage() {
         {PROMOS.map(p => (
           <div
             key={p.id}
-            className="bg-white rounded-2xl border border-gray-150 shadow-2xs overflow-hidden"
+            className="bg-white rounded-2xl border border-gray-100 shadow-2xs overflow-hidden"
           >
             <div className="p-4 space-y-2">
               <div className="flex items-center justify-between">

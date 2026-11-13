@@ -49,7 +49,7 @@ export default function WUSSendPage() {
           <span className="text-3xl">📨</span>
         </div>
 
-        <div className="bg-white rounded-2xl p-4 border border-gray-150 shadow-2xs space-y-3">
+        <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-2xs space-y-3">
           <h3 className="text-xs font-extrabold text-[#111827]">Detail Pengiriman</h3>
 
           <div>
@@ -89,7 +89,7 @@ export default function WUSSendPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-4 border border-gray-150 shadow-2xs space-y-2.5">
+        <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-2xs space-y-2.5">
           <h3 className="text-xs font-extrabold text-[#111827]">Layanan Kecepatan</h3>
 
           <div className="space-y-2">
@@ -119,7 +119,7 @@ export default function WUSSendPage() {
       </div>
 
       {/* ── FIXED BOTTOM CTA ── */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-5 py-3.5 bg-white border-t border-gray-150 z-50 shadow-lg">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-5 py-3.5 bg-white border-t border-gray-200 z-50 shadow-lg">
         <button
           onClick={estimate}
           className="w-full bg-[#EF4444] hover:bg-[#DC2626] active:scale-[0.98] text-white font-extrabold py-3.5 rounded-full text-xs transition-all shadow-md shadow-red-500/25 cursor-pointer"

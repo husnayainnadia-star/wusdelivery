@@ -49,7 +49,7 @@ export default function WUSMovePage() {
           <span className="text-3xl">📦</span>
         </div>
 
-        <div className="bg-white rounded-2xl p-4 border border-gray-150 shadow-2xs space-y-3">
+        <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-2xs space-y-3">
           <h3 className="text-xs font-extrabold text-[#111827]">Detail Alamat Pindahan</h3>
 
           <div>
@@ -79,7 +79,7 @@ export default function WUSMovePage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-4 border border-gray-150 shadow-2xs space-y-3">
+        <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-2xs space-y-3">
           <h3 className="text-xs font-extrabold text-[#111827]">Pilih Kendaraan Angkut</h3>
 
           <div className="space-y-2.5">
@@ -113,7 +113,7 @@ export default function WUSMovePage() {
       </div>
 
       {/* ── FIXED BOTTOM CTA ── */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-5 py-3.5 bg-white border-t border-gray-150 z-50 shadow-lg">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-5 py-3.5 bg-white border-t border-gray-200 z-50 shadow-lg">
         <button
           onClick={estimate}
           className="w-full bg-[#8B5CF6] hover:bg-[#7C3AED] active:scale-[0.98] text-white font-extrabold py-3.5 rounded-full text-xs transition-all shadow-md shadow-purple-500/25 cursor-pointer"

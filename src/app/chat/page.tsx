@@ -126,7 +126,7 @@ export default function ChatPage() {
               className={`max-w-[80%] px-4 py-3 rounded-2xl text-xs leading-relaxed shadow-2xs ${
                 msg.from === 'user'
                   ? 'bg-[#193CA5] text-white rounded-br-xs font-medium'
-                  : 'bg-white text-gray-800 border border-gray-150 rounded-bl-xs'
+                  : 'bg-white text-gray-800 border border-gray-100 rounded-bl-xs'
               }`}
               style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}
             >
@@ -164,7 +164,7 @@ export default function ChatPage() {
       </div>
 
       {/* ── FIXED INPUT BAR (Gojek Style) ── */}
-      <div className="fixed bottom-14 left-1/2 -translate-x-1/2 w-full max-w-[390px] bg-white border-t border-gray-150 z-40 px-4 py-2.5 shadow-xs">
+      <div className="fixed bottom-14 left-1/2 -translate-x-1/2 w-full max-w-[390px] bg-white border-t border-gray-200 z-40 px-4 py-2.5 shadow-xs">
         <div className="flex items-center gap-2 bg-[#F1F5F9] border border-gray-200/80 focus-within:border-[#193CA5] focus-within:bg-white rounded-full px-4 py-2 transition-all">
           <input
             value={input}

@@ -42,7 +42,7 @@ export default function NotificationsPage() {
           return (
             <div
               key={n.id}
-              className={`bg-white rounded-2xl p-4 border border-gray-150 shadow-2xs flex gap-3.5 ${
+              className={`bg-white rounded-2xl p-4 border border-gray-100 shadow-2xs flex gap-3.5 ${
                 !n.isRead ? 'border-l-4 border-l-[#193CA5]' : ''
               }`}
             >

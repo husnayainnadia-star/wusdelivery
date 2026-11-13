@@ -1,53 +1,63 @@
 @import "tailwindcss";
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/*
+  PENTING: Jangan menaruh reset atau class kustom di LUAR @layer!
+  CSS di luar layer akan mengalahkan SEMUA utility Tailwind (yang ada
+  di @layer utilities) pada hasil build production — apa pun
+  specificity-nya. Itulah penyebab spacing/posisi berantakan setelah
+  deploy. Tailwind preflight sudah me-reset margin/padding/border
+  di @layer base, jadi tidak perlu reset manual.
+*/
+
+@layer base {
+  html {
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    background: #e8edf5;
+    min-height: 100vh;
+  }
 }
 
-html {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-}
+@layer components {
+  /* Frame aplikasi mobile (maks 390px, di tengah layar) */
+  .app-shell {
+    max-width: 390px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: #f5f6fa;
+    position: relative;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.18);
+  }
 
-body {
-  background: #e8edf5;
-  min-height: 100vh;
-}
+  /* Halaman auth (sign-in, sign-up, forgot-password) full screen di desktop */
+  .auth-page-wrapper {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+  }
 
-.app-shell {
-  max-width: 390px;
-  margin: 0 auto;
-  min-height: 100vh;
-  background: #f5f6fa;
-  position: relative;
-  box-shadow: 0 0 50px rgba(0,0,0,0.18);
-}
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 
-/* Auth pages (sign-in, sign-up, forgot-password) fill full screen on desktop */
-.auth-page-wrapper {
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: stretch;
-}
+  /* Helper spacing dengan !important — sengaja menang atas utility biasa */
+  .page-px {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
 
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .card-padding {
+    padding: 16px 18px !important;
+  }
 
-.line-clamp-1 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
-.line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-
-/* Guaranteed padding and box spacing */
-.page-px {
-  padding-left: 20px !important;
-  padding-right: 20px !important;
-}
-
-.card-padding {
-  padding: 16px 18px !important;
-}
-
-.input-box {
-  padding: 14px 18px !important;
+  .input-box {
+    padding: 14px 18px !important;
+  }
 }

@@ -111,7 +111,7 @@ export default function OrdersPage() {
           return (
             <div
               key={order.id}
-              className="bg-white rounded-2xl p-4 border border-gray-150 shadow-2xs space-y-3"
+              className="bg-white rounded-2xl p-4 border border-gray-100 shadow-2xs space-y-3"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center gap-3">

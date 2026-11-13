@@ -79,7 +79,7 @@ export default function TrackingPage({ params }: { params: Promise<{ id: string 
       {/* ── CONTENT ── */}
       <main className="flex-1 min-h-0 overflow-y-auto px-4 pt-3.5 space-y-3.5 pb-8">
         {/* 1. Gojek-Style Stepper Progress Card */}
-        <div className="bg-white rounded-3xl p-4 border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)]">
+        <div className="bg-white rounded-3xl p-4 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.03)]">
           <div className="flex items-center justify-between relative px-2 pt-1">
             <div className="absolute top-5 left-5 right-5 h-0.5 bg-gray-200 -z-0" />
             <div className="absolute top-5 left-5 w-[65%] h-0.5 bg-[#193CA5] -z-0" />
@@ -116,7 +116,7 @@ export default function TrackingPage({ params }: { params: Promise<{ id: string 
         </div>
 
         {/* 2. Map Canvas Box (Gojek Live Tracking Style) */}
-        <div className="bg-white rounded-3xl p-2 border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)]">
+        <div className="bg-white rounded-3xl p-2 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.03)]">
           <div className="relative w-full h-56 bg-[#E8F0FE] rounded-2xl overflow-hidden flex items-center justify-center">
             {/* SVG Roads */}
             <svg className="absolute inset-0 w-full h-full" viewBox="0 0 350 220" preserveAspectRatio="none">
@@ -160,7 +160,7 @@ export default function TrackingPage({ params }: { params: Promise<{ id: string 
         </div>
 
         {/* 3. Gojek-Style Driver Card */}
-        <div className="bg-white rounded-3xl p-4 border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)] space-y-3">
+        <div className="bg-white rounded-3xl p-4 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.03)] space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-amber-100 border border-amber-200 text-2xl flex items-center justify-center shadow-2xs shrink-0">
@@ -169,7 +169,7 @@ export default function TrackingPage({ params }: { params: Promise<{ id: string 
               <div>
                 <div className="flex items-center gap-1.5">
                   <h3 className="text-xs font-black text-[#0F172A]">{courierName}</h3>
-                  <span className="text-[9px] font-bold bg-emerald-50 text-emerald-700 px-1.5 py-0.2 rounded border border-emerald-200">
+                  <span className="text-[9px] font-bold bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded border border-emerald-200">
                     ★ 4.9
                   </span>
                 </div>
@@ -213,7 +213,7 @@ export default function TrackingPage({ params }: { params: Promise<{ id: string 
       </main>
 
       {/* ── FIXED BOTTOM CTA (Gojek Style) ── */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-4 py-3 bg-white border-t border-gray-150 z-50 shadow-lg">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-4 py-3 bg-white border-t border-gray-200 z-50 shadow-lg">
         <Link href="/chat">
           <button className="w-full bg-[#193CA5] hover:bg-[#15328A] active:scale-[0.98] text-white font-black py-3.5 rounded-full text-xs transition-all shadow-md shadow-[#193CA5]/25 flex items-center justify-center gap-2 cursor-pointer">
             <MessageCircle size={15} /> Hubungi Kurir via Chat

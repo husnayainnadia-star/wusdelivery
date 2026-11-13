@@ -57,7 +57,7 @@ export default function ProfilePage() {
       {/* ── CONTENT ── */}
       <main className="flex-1 min-h-0 overflow-y-auto px-4 pt-3.5 space-y-3.5 pb-8">
         {/* Profile Card */}
-        <div className="bg-white rounded-3xl p-4 border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)] flex items-center gap-3.5">
+        <div className="bg-white rounded-3xl p-4 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.03)] flex items-center gap-3.5">
           <div className="w-13 h-13 rounded-2xl bg-[#EBF3FF] border-2 border-[#193CA5] flex items-center justify-center text-xl font-black text-[#193CA5] shrink-0">
             <User size={22} />
           </div>
@@ -92,7 +92,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Menu Items (Gojek Account List) */}
-        <div className="bg-white rounded-3xl border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)] divide-y divide-gray-100 overflow-hidden">
+        <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.03)] divide-y divide-gray-100 overflow-hidden">
           {MENU_ITEMS.map((item, idx) => {
             const Icon = item.icon;
             return (

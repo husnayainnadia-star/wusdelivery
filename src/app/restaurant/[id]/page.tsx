@@ -149,7 +149,7 @@ export default function RestaurantDetailPage({ params }: { params: Promise<{ id:
 
       {/* ── RESTAURANT INFO CARD (Gojek GoFood Style) ── */}
       <div className="px-4 -mt-8 relative z-10">
-        <div className="bg-white rounded-3xl p-4 shadow-sm border border-gray-150 flex items-center gap-3.5">
+        <div className="bg-white rounded-3xl p-4 shadow-sm border border-gray-100 flex items-center gap-3.5">
           <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-white shadow-md bg-white shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -212,7 +212,7 @@ export default function RestaurantDetailPage({ params }: { params: Promise<{ id:
             return (
               <div
                 key={item.id}
-                className="bg-white rounded-2xl p-3.5 border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)] flex items-center justify-between gap-3.5"
+                className="bg-white rounded-2xl p-3.5 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.03)] flex items-center justify-between gap-3.5"
               >
                 {/* Left Description */}
                 <div className="flex-1 min-w-0 space-y-1">

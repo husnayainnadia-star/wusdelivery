@@ -84,7 +84,7 @@ export default function CartPage() {
       {/* ── CONTENT ── */}
       <main className="flex-1 min-h-0 overflow-y-auto px-4 pt-3.5 space-y-3.5 pb-8">
         {/* Address Card (Gojek Style) */}
-        <div className="bg-white rounded-2xl p-3.5 border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)] flex items-start gap-3">
+        <div className="bg-white rounded-2xl p-3.5 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.03)] flex items-start gap-3">
           <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#193CA5] flex items-center justify-center shrink-0 mt-0.5">
             <MapPin size={16} />
           </div>
@@ -98,7 +98,7 @@ export default function CartPage() {
         </div>
 
         {/* Item List */}
-        <div className="bg-white rounded-3xl p-4 border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)] space-y-3">
+        <div className="bg-white rounded-3xl p-4 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.03)] space-y-3">
           <div className="flex items-center justify-between pb-2 border-b border-gray-100">
             <span className="text-xs font-black text-[#0F172A]">Menu Yang Dipesan</span>
             <Link href="/food" className="text-[11px] font-bold text-[#193CA5]">
@@ -159,7 +159,7 @@ export default function CartPage() {
         </div>
 
         {/* Ringkasan Pembayaran (Gojek Style) */}
-        <div className="bg-white rounded-3xl p-4 border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)] space-y-2.5">
+        <div className="bg-white rounded-3xl p-4 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.03)] space-y-2.5">
           <h2 className="text-xs font-black text-[#0F172A] pb-1.5 border-b border-gray-100">
             Rincian Pembayaran
           </h2>
@@ -196,7 +196,7 @@ export default function CartPage() {
       </main>
 
       {/* ── FIXED BOTTOM CTA (Gojek Style) ── */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-4 py-3 bg-white border-t border-gray-150 z-50 shadow-lg">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-4 py-3 bg-white border-t border-gray-200 z-50 shadow-lg">
         <Link href="/checkout">
           <button className="w-full bg-[#193CA5] hover:bg-[#15328A] active:scale-[0.98] text-white font-black py-3.5 rounded-full text-xs transition-all shadow-md shadow-[#193CA5]/25 flex items-center justify-between px-5 cursor-pointer">
             <span>Lanjut ke Pembayaran</span>

@@ -83,7 +83,7 @@ export default function WUSMartPage() {
             return (
               <div
                 key={item.id}
-                className="bg-white rounded-2xl p-3.5 border border-gray-150 shadow-2xs flex items-center justify-between gap-3"
+                className="bg-white rounded-2xl p-3.5 border border-gray-100 shadow-2xs flex items-center justify-between gap-3"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="w-12 h-12 rounded-xl bg-blue-50 text-2xl flex items-center justify-center shadow-2xs shrink-0">
@@ -129,7 +129,7 @@ export default function WUSMartPage() {
 
       {/* ── FIXED BOTTOM CTA ── */}
       {totalItems > 0 && (
-        <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-5 py-3.5 bg-white border-t border-gray-150 z-50 shadow-lg">
+        <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-5 py-3.5 bg-white border-t border-gray-200 z-50 shadow-lg">
           <button
             onClick={() => router.push('/cart')}
             className="w-full bg-[#193CA5] hover:bg-[#15328A] active:scale-[0.98] text-white font-extrabold py-3.5 rounded-full text-xs transition-all shadow-md shadow-[#193CA5]/25 flex items-center justify-between px-5 cursor-pointer"

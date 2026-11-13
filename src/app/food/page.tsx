@@ -153,7 +153,7 @@ export default function FoodPage() {
 
           {filtered.map(r => (
             <Link key={r.id} href={`/restaurant/${r.id}`} className="block group">
-              <div className="bg-white rounded-2xl p-3 border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)] group-hover:border-blue-200 transition-all flex items-center gap-3">
+              <div className="bg-white rounded-2xl p-3 border border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.03)] group-hover:border-blue-200 transition-all flex items-center gap-3">
                 <div className="relative w-18 h-18 rounded-xl overflow-hidden bg-gray-100 shrink-0 shadow-inner">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
