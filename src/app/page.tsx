@@ -141,9 +141,9 @@ export default function HomePage() {
       </header>
 
       {/* ── SCROLLABLE BODY ── */}
-      <main className="flex-1 min-h-0 overflow-y-auto px-4 pt-3 pb-8 space-y-4">
+      <main className="flex-1 min-h-0 overflow-y-auto px-4 pt-5 pb-8 space-y-5">
         {/* ── 1. WUSPAY WALLET BAR (Iconic Gojek Gopay Card) ── */}
-        <div className="bg-white rounded-2xl p-3 border border-gray-150 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex items-center justify-between">
+        <div className="bg-white rounded-2xl p-4 border border-gray-150 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex items-center justify-between">
           {/* Balance info */}
           <div className="flex items-center gap-3 pl-1">
             <div className="w-9 h-9 rounded-xl bg-blue-50 text-[#193CA5] flex items-center justify-center font-black text-sm shrink-0 border border-blue-100">
@@ -194,8 +194,8 @@ export default function HomePage() {
         </div>
 
         {/* ── 2. SERVICES GRID (Iconic Gojek 4-Column Clean Layout) ── */}
-        <div className="bg-white rounded-3xl p-4 border border-gray-150 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-          <div className="grid grid-cols-4 gap-y-4 gap-x-2">
+        <div className="bg-white rounded-3xl p-5 border border-gray-150 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+          <div className="grid grid-cols-4 gap-y-5 gap-x-3">
             {SERVICES.map(s => (
               <Link key={s.id} href={s.href} className="group flex flex-col items-center text-center">
                 <div
@@ -271,7 +271,7 @@ export default function HomePage() {
           <div className="space-y-2.5">
             {RESTAURANTS.map(r => (
               <Link key={r.id} href={`/restaurant/${r.id}`} className="block group">
-                <div className="bg-white rounded-2xl p-3 border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)] group-hover:border-blue-200 transition-all flex items-center gap-3">
+                <div className="bg-white rounded-2xl p-4 border border-gray-150 shadow-[0_1px_4px_rgba(0,0,0,0.03)] group-hover:border-blue-200 transition-all flex items-center gap-3">
                   {/* Photo with Promo Tag */}
                   <div className="relative w-18 h-18 rounded-xl overflow-hidden bg-gray-100 shrink-0 shadow-inner">
                     {/* eslint-disable-next-line @next/next/no-img-element */}

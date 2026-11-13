@@ -43,7 +43,7 @@ export default function SignInPage() {
       {/* Mobile Status Bar */}
       <MobileStatusBar variant="dark" />
 
-      <div className="flex-1 px-6 py-8 flex flex-col justify-center max-w-[360px] mx-auto w-full">
+      <div className="flex-1 px-6 py-8 flex flex-col justify-center max-w-[380px] mx-auto w-full">
         {/* Top Logo */}
         <div className="flex justify-center mb-6">
           <WUSLogo size="lg" variant="blue" showSubtitle={true} />
@@ -65,23 +65,25 @@ export default function SignInPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email input */}
           <div>
+            <label className="block text-xs font-bold text-gray-600 mb-1.5 pl-1">Email</label>
             <input
               type="email"
               value={form.email}
               onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-              placeholder="Email"
-              className="w-full bg-[#F8FAFC] border border-gray-300/80 rounded-2xl px-5 py-3.5 text-xs sm:text-sm text-[#111827] placeholder:text-gray-400 outline-none focus:border-[#193CA5] focus:bg-white transition-all shadow-2xs"
+              placeholder="Masukkan email kamu"
+              className="w-full bg-[#F8FAFC] border border-gray-300/80 rounded-2xl px-6 py-4 text-sm text-[#111827] placeholder:text-gray-400 outline-none focus:border-[#193CA5] focus:bg-white transition-all shadow-2xs"
             />
           </div>
 
           {/* Password input */}
           <div className="relative">
+            <label className="block text-xs font-bold text-gray-600 mb-1.5 pl-1">Password</label>
             <input
               type={showPw ? 'text' : 'password'}
               value={form.password}
               onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
-              placeholder="Password"
-              className="w-full bg-[#F8FAFC] border border-gray-300/80 rounded-2xl px-5 py-3.5 pr-12 text-xs sm:text-sm text-[#111827] placeholder:text-gray-400 outline-none focus:border-[#193CA5] focus:bg-white transition-all shadow-2xs"
+              placeholder="Masukkan password kamu"
+              className="w-full bg-[#F8FAFC] border border-gray-300/80 rounded-2xl px-6 py-4 pr-14 text-sm text-[#111827] placeholder:text-gray-400 outline-none focus:border-[#193CA5] focus:bg-white transition-all shadow-2xs"
             />
             <button
               type="button"
@@ -103,7 +105,7 @@ export default function SignInPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#193CA5] hover:bg-[#15328A] active:scale-[0.98] text-white font-extrabold py-3.5 rounded-2xl text-sm transition-all shadow-md shadow-[#193CA5]/25 disabled:opacity-70 mt-1 cursor-pointer"
+            className="w-full bg-[#193CA5] hover:bg-[#15328A] active:scale-[0.98] text-white font-extrabold py-4 rounded-2xl text-sm transition-all shadow-md shadow-[#193CA5]/25 disabled:opacity-70 mt-1 cursor-pointer"
           >
             {isLoading ? 'Signing in...' : 'Sign in'}
           </button>
