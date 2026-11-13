@@ -3,14 +3,14 @@
 import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, Phone, MessageCircle, Clock, Check, Bike, Home, Store, ArrowLeft } from 'lucide-react';
+import { ChevronLeft, Phone, MessageCircle, Clock, Check, Bike, Home, Store } from 'lucide-react';
 import MobileStatusBar from '@/components/shared/MobileStatusBar';
 
 const STEPS = [
-  { label: 'Pesanan Diterima', state: 'done' },
-  { label: 'Sedang Disiapkan', state: 'done' },
-  { label: 'Dalam Perjalanan', state: 'active' },
-  { label: 'Terkirim', state: 'pending' },
+  { label: 'Pesanan\nditerima', state: 'done' },
+  { label: 'Disiapkan', state: 'done' },
+  { label: 'Dalam\nperjalanan', state: 'active' },
+  { label: 'Selesai', state: 'pending' },
 ];
 
 interface OrderData {
@@ -54,14 +54,15 @@ export default function TrackingPage({ params }: { params: Promise<{ id: string 
 
   const courierName = order?.courierName || 'RIZKY PRIYATNO';
   const courierVehicle = order?.courierVehicle || 'AD 5009 NH';
-  const eta = order?.estimatedArrival || '17.10 - 17.25';
+  const eta = order?.estimatedArrival || '17.10-17.25';
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col pb-24 md:pb-12 select-none">
-      <MobileStatusBar />
+    <div className="min-h-screen bg-[#F5F6FA] flex flex-col relative pb-28 select-none">
+      {/* ── STATUS BAR ── */}
+      <MobileStatusBar variant="dark" />
 
-      {/* ── MOBILE HEADER (Hidden on desktop) ── */}
-      <div className="md:hidden bg-white px-5 pt-3 pb-3.5 flex items-center justify-between border-b border-gray-100 shadow-2xs">
+      {/* ── HEADER ── */}
+      <div className="bg-white px-5 pt-2 pb-3.5 flex items-center justify-between border-b border-gray-100 shadow-2xs">
         <button
           onClick={() => router.push('/')}
           className="w-9 h-9 bg-gray-50 rounded-xl flex items-center justify-center text-gray-700 active:scale-95"
@@ -72,202 +73,135 @@ export default function TrackingPage({ params }: { params: Promise<{ id: string 
         <div className="w-9" />
       </div>
 
-      {/* ── MAIN CONTENT (Laptop/Desktop 2-Column Responsive Layout) ── */}
-      <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5 md:py-8 flex-1">
-        <div className="hidden md:flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-black text-[#111827]">Pelacakan Pesanan Real-time</h1>
-            <p className="text-sm text-gray-500 mt-1">
-              ID Pesanan: <strong className="text-[#193CA5]">{id}</strong> • Kurir sedang mengantar ke lokasimu
-            </p>
+      {/* ── CONTENT ── */}
+      <div className="flex-1 min-h-0 overflow-y-auto px-5 pt-4 space-y-4 pb-8">
+        {/* 1. Stepper Progress Card with Comfortable Spacing */}
+        <div className="bg-white rounded-2xl p-4 border border-gray-150 shadow-2xs">
+          <div className="flex items-center justify-between relative px-2 pt-1">
+            <div className="absolute top-5 left-5 right-5 h-0.5 bg-gray-200 -z-0" />
+            <div className="absolute top-5 left-5 w-[65%] h-0.5 bg-[#193CA5] -z-0" />
+
+            {STEPS.map((s, idx) => (
+              <div key={idx} className="flex flex-col items-center text-center relative z-10">
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+                    s.state === 'done'
+                      ? 'bg-[#193CA5] text-white'
+                      : s.state === 'active'
+                      ? 'bg-[#193CA5] text-white ring-4 ring-blue-100'
+                      : 'bg-white border-2 border-gray-300 text-gray-400'
+                  }`}
+                >
+                  {s.state === 'done' && <Check size={14} strokeWidth={3} />}
+                  {s.state === 'active' && <Bike size={14} />}
+                  {s.state === 'pending' && <span className="w-1.5 h-1.5 rounded-full bg-gray-300" />}
+                </div>
+                <span
+                  className={`text-[9px] mt-1.5 font-bold leading-tight whitespace-pre-line ${
+                    s.state === 'active'
+                      ? 'text-[#193CA5]'
+                      : s.state === 'done'
+                      ? 'text-gray-800'
+                      : 'text-gray-400'
+                  }`}
+                >
+                  {s.label}
+                </span>
+              </div>
+            ))}
           </div>
-          <Link
-            href="/"
-            className="flex items-center gap-1.5 text-xs font-bold text-gray-600 bg-white border border-gray-200 px-4 py-2 rounded-xl hover:bg-gray-50 transition-colors"
-          >
-            <ArrowLeft size={14} /> Beranda
-          </Link>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
-          {/* ── LEFT COLUMN: STATUS & COURIER (5 cols) ── */}
-          <div className="lg:col-span-5 space-y-5">
-            {/* 4-Step Progress Card with Generous Padding */}
-            <div className="bg-white rounded-3xl p-6 border border-gray-150 shadow-xs space-y-4">
-              <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider pb-2 border-b border-gray-100">
-                Status Pengiriman
-              </h2>
+        {/* 2. Map Canvas Box */}
+        <div className="bg-white rounded-2xl p-2 border border-gray-150 shadow-2xs">
+          <div className="relative w-full h-64 bg-[#E8F0FE] rounded-xl overflow-hidden flex items-center justify-center">
+            {/* SVG Roads */}
+            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 350 260" preserveAspectRatio="none">
+              <line x1="0" y1="80" x2="350" y2="80" stroke="#cbd5e1" strokeWidth="4" strokeDasharray="6 4" />
+              <line x1="0" y1="180" x2="350" y2="180" stroke="#cbd5e1" strokeWidth="4" strokeDasharray="6 4" />
+              <line x1="120" y1="0" x2="120" y2="260" stroke="#cbd5e1" strokeWidth="4" strokeDasharray="6 4" />
+              <line x1="250" y1="0" x2="250" y2="260" stroke="#cbd5e1" strokeWidth="4" strokeDasharray="6 4" />
+              <path d="M 40 210 Q 140 190 180 130 T 310 60" fill="none" stroke="#193CA5" strokeWidth="4" strokeLinecap="round" />
+            </svg>
 
-              <div className="flex items-center justify-between relative px-2 pt-2">
-                {/* Connecting track lines */}
-                <div className="absolute top-6 left-6 right-6 h-1 bg-gray-100 -z-0" />
-                <div className="absolute top-6 left-6 w-[60%] h-1 bg-[#193CA5] -z-0 transition-all duration-500" />
-
-                {STEPS.map((s, idx) => (
-                  <div key={idx} className="flex flex-col items-center text-center relative z-10">
-                    <div
-                      className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${
-                        s.state === 'done'
-                          ? 'bg-[#193CA5] text-white shadow-xs'
-                          : s.state === 'active'
-                          ? 'bg-[#193CA5] text-white ring-4 ring-blue-100 scale-110 shadow-sm'
-                          : 'bg-white border-2 border-gray-300 text-gray-400'
-                      }`}
-                    >
-                      {s.state === 'done' && <Check size={16} strokeWidth={3} />}
-                      {s.state === 'active' && <Bike size={16} />}
-                      {s.state === 'pending' && <span className="w-2 h-2 rounded-full bg-gray-300" />}
-                    </div>
-                    <span
-                      className={`text-[11px] mt-2 font-bold max-w-[70px] leading-tight ${
-                        s.state === 'active'
-                          ? 'text-[#193CA5]'
-                          : s.state === 'done'
-                          ? 'text-gray-900'
-                          : 'text-gray-400'
-                      }`}
-                    >
-                      {s.label}
-                    </span>
-                  </div>
-                ))}
+            {/* Store Pin */}
+            <div className="absolute left-6 bottom-8 flex flex-col items-center">
+              <div className="w-9 h-9 rounded-xl bg-white text-[#193CA5] border-2 border-[#193CA5] flex items-center justify-center shadow-md">
+                <Store size={16} />
               </div>
             </div>
 
-            {/* Courier Info Card */}
-            <div className="bg-white rounded-3xl p-6 border border-gray-150 shadow-xs space-y-4">
-              <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider pb-2 border-b border-gray-100">
-                Informasi Kurir Pengantar
-              </h2>
-
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3.5">
-                  <div className="w-14 h-14 rounded-2xl bg-amber-100 border border-amber-200 text-2xl flex items-center justify-center shadow-xs shrink-0">
-                    🛵
-                  </div>
-                  <div>
-                    <h3 className="text-base font-extrabold text-[#111827]">{courierName}</h3>
-                    <p className="text-xs font-bold text-gray-500 mt-0.5">{courierVehicle}</p>
-                    <span className="inline-block mt-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
-                      Kurir Terverifikasi ★ 4.9
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <a
-                    href="tel:081234567890"
-                    className="w-10 h-10 rounded-xl bg-gray-50 hover:bg-emerald-50 hover:text-emerald-600 border border-gray-200 flex items-center justify-center text-gray-700 transition-colors shadow-2xs"
-                    title="Telepon Kurir"
-                  >
-                    <Phone size={17} />
-                  </a>
-                  <Link
-                    href="/chat"
-                    className="w-10 h-10 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200 flex items-center justify-center text-[#193CA5] transition-colors shadow-2xs"
-                    title="Chat Kurir"
-                  >
-                    <MessageCircle size={17} />
-                  </Link>
-                </div>
+            {/* Home Pin */}
+            <div className="absolute right-6 top-8 flex flex-col items-center">
+              <div className="w-9 h-9 rounded-xl bg-red-500 text-white border-2 border-white flex items-center justify-center shadow-md animate-bounce">
+                <Home size={16} />
               </div>
+            </div>
 
-              {/* ETA Banner */}
-              <div className="bg-[#EAF1FF] border border-blue-100 rounded-2xl p-4 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <Clock size={18} className="text-[#193CA5]" />
-                  <div>
-                    <span className="text-xs text-gray-500 block">Estimasi Waktu Tiba</span>
-                    <span className="text-sm font-extrabold text-[#193CA5]">{eta} WIB</span>
-                  </div>
-                </div>
-                <span className="text-xs font-bold bg-white text-[#193CA5] px-3 py-1 rounded-lg border border-blue-200">
-                  ± 10 Menit lagi
-                </span>
+            {/* Courier Motorbike Pin */}
+            <div
+              className="absolute transition-all duration-300 flex flex-col items-center pointer-events-none"
+              style={{
+                left: `${courierProgress}%`,
+                top: `${100 - courierProgress * 0.8}%`,
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              <div className="w-10 h-10 rounded-full bg-[#193CA5] border-2 border-white text-white flex items-center justify-center shadow-lg text-base">
+                🛵
               </div>
             </div>
           </div>
+        </div>
 
-          {/* ── RIGHT COLUMN: INTERACTIVE MAP (7 cols) ── */}
-          <div className="lg:col-span-7">
-            <div className="bg-white rounded-3xl p-5 md:p-6 border border-gray-150 shadow-xs space-y-4">
-              <div className="flex items-center justify-between pb-2 border-b border-gray-100">
-                <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <Bike size={14} className="text-[#193CA5]" /> Rute Perjalanan Kurir
-                </h2>
-                <span className="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" /> Live Tracking
-                </span>
+        {/* 3. Courier Profile Box with Generous Internal Padding */}
+        <div className="bg-white rounded-2xl p-4 border border-gray-150 shadow-2xs space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-full bg-amber-100 border border-amber-200 text-xl flex items-center justify-center shadow-2xs shrink-0">
+                👨‍✈️
               </div>
-
-              {/* Map Canvas Visual */}
-              <div className="relative w-full h-80 sm:h-96 bg-[#E8F0FE] rounded-2xl overflow-hidden border border-gray-200 shadow-inner flex items-center justify-center">
-                {/* SVG Route */}
-                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 500 350" preserveAspectRatio="none">
-                  {/* Road Grid lines */}
-                  <line x1="0" y1="100" x2="500" y2="100" stroke="#cbd5e1" strokeWidth="6" strokeDasharray="8 6" />
-                  <line x1="0" y1="230" x2="500" y2="230" stroke="#cbd5e1" strokeWidth="6" strokeDasharray="8 6" />
-                  <line x1="160" y1="0" x2="160" y2="350" stroke="#cbd5e1" strokeWidth="6" strokeDasharray="8 6" />
-                  <line x1="360" y1="0" x2="360" y2="350" stroke="#cbd5e1" strokeWidth="6" strokeDasharray="8 6" />
-
-                  {/* Delivery Route Path */}
-                  <path
-                    d="M 80 260 Q 200 240 260 170 T 420 80"
-                    fill="none"
-                    stroke="#193CA5"
-                    strokeWidth="5"
-                    strokeLinecap="round"
-                  />
-                </svg>
-
-                {/* Restaurant / Store Marker */}
-                <div className="absolute left-8 bottom-12 flex flex-col items-center">
-                  <div className="w-11 h-11 rounded-2xl bg-white text-[#193CA5] border-2 border-[#193CA5] flex items-center justify-center shadow-lg">
-                    <Store size={20} />
-                  </div>
-                  <span className="bg-white/95 text-[10px] font-black text-gray-800 px-2 py-0.5 rounded-md mt-1 border border-gray-200 shadow-xs">
-                    Restoran
-                  </span>
-                </div>
-
-                {/* Home / Destination Marker */}
-                <div className="absolute right-8 top-10 flex flex-col items-center">
-                  <div className="w-11 h-11 rounded-2xl bg-red-500 text-white border-2 border-white flex items-center justify-center shadow-lg animate-bounce">
-                    <Home size={20} />
-                  </div>
-                  <span className="bg-white/95 text-[10px] font-black text-gray-800 px-2 py-0.5 rounded-md mt-1 border border-gray-200 shadow-xs">
-                    Lokasimu
-                  </span>
-                </div>
-
-                {/* Dynamic Courier Bike Marker */}
-                <div
-                  className="absolute transition-all duration-300 flex flex-col items-center pointer-events-none"
-                  style={{
-                    left: `${courierProgress}%`,
-                    top: `${100 - courierProgress * 0.8}%`,
-                    transform: 'translate(-50%, -50%)',
-                  }}
-                >
-                  <div className="w-12 h-12 rounded-full bg-[#193CA5] border-3 border-white text-white flex items-center justify-center shadow-xl text-xl">
-                    🛵
-                  </div>
-                  <span className="bg-[#193CA5] text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm whitespace-nowrap mt-1">
-                    Kurir ({Math.round(courierProgress)}%)
-                  </span>
-                </div>
+              <div>
+                <h3 className="text-xs font-extrabold text-[#111827]">{courierName}</h3>
+                <p className="text-[11px] font-bold text-gray-500 mt-0.5">{courierVehicle}</p>
               </div>
+            </div>
 
-              {/* Action Button */}
-              <Link href="/chat" className="block pt-2">
-                <button className="w-full bg-[#193CA5] hover:bg-[#15328A] active:scale-[0.98] text-white font-extrabold py-3.5 px-6 rounded-2xl text-sm transition-all shadow-md shadow-[#193CA5]/25 flex items-center justify-center gap-2 cursor-pointer">
-                  <MessageCircle size={17} /> Hubungi Kurir Lewat Chat
-                </button>
+            <div className="flex items-center gap-2">
+              <a
+                href="tel:081234567890"
+                className="w-8 h-8 rounded-full bg-gray-50 hover:bg-emerald-50 hover:text-emerald-600 border border-gray-200 flex items-center justify-center text-gray-700 transition-colors shadow-2xs"
+              >
+                <Phone size={14} />
+              </a>
+              <Link
+                href="/chat"
+                className="w-8 h-8 rounded-full bg-blue-50 hover:bg-blue-100 border border-blue-200 flex items-center justify-center text-[#193CA5] transition-colors shadow-2xs"
+              >
+                <MessageCircle size={14} />
               </Link>
             </div>
           </div>
+
+          {/* ETA Banner */}
+          <div className="bg-[#EAF1FF] border border-blue-100 rounded-xl p-3 flex items-center gap-2.5">
+            <Clock size={16} className="text-[#193CA5] shrink-0" />
+            <div className="text-xs text-[#193CA5] font-semibold leading-relaxed">
+              <span className="block text-[10px] text-gray-500 font-normal">Kurir sedang dalam perjalanan menuju lokasi Anda</span>
+              <span className="font-extrabold">{eta}</span>
+            </div>
+          </div>
         </div>
-      </main>
+      </div>
+
+      {/* ── FIXED BOTTOM CTA ── */}
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-5 py-3.5 bg-white border-t border-gray-150 z-50 shadow-lg">
+        <Link href="/chat">
+          <button className="w-full bg-[#193CA5] hover:bg-[#15328A] active:scale-[0.98] text-white font-extrabold py-3.5 rounded-full text-xs transition-all shadow-md shadow-[#193CA5]/25 flex items-center justify-center gap-2 cursor-pointer">
+            <MessageCircle size={15} /> Hubungi Kurir
+          </button>
+        </Link>
+      </div>
     </div>
   );
 }

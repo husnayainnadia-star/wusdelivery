@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, ChevronRight, ShoppingBag, Clock } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock } from 'lucide-react';
 import BottomNav from '@/components/navigation/BottomNav';
 import MobileStatusBar from '@/components/shared/MobileStatusBar';
 
@@ -32,7 +32,7 @@ const DEFAULT_ORDERS = [
     items: 'Kebab Original (x1), French Fries (x1)',
     total: 37000,
     status: 'Selesai',
-    date: '4 Nov 2026, 12:40',
+    date: '4 Nov 2026',
     emoji: '🌯',
   },
 ];
@@ -86,11 +86,12 @@ export default function OrdersPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col pb-24 md:pb-12 select-none">
-      <MobileStatusBar />
+    <div className="min-h-screen bg-[#F5F6FA] flex flex-col relative pb-24 select-none">
+      {/* ── STATUS BAR ── */}
+      <MobileStatusBar variant="dark" />
 
-      {/* ── MOBILE HEADER (Hidden on desktop) ── */}
-      <div className="md:hidden bg-white px-5 pt-3 pb-3.5 flex items-center justify-between border-b border-gray-100 shadow-2xs">
+      {/* ── HEADER ── */}
+      <div className="bg-white px-5 pt-2 pb-3.5 flex items-center justify-between border-b border-gray-100 shadow-2xs">
         <button
           onClick={() => router.push('/')}
           className="w-9 h-9 bg-gray-50 rounded-xl flex items-center justify-center text-gray-700 active:scale-95"
@@ -101,76 +102,65 @@ export default function OrdersPage() {
         <div className="w-9" />
       </div>
 
-      {/* ── MAIN CONTENT (Laptop/Desktop Responsive Layout) ── */}
-      <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5 md:py-8 flex-1 space-y-6">
-        <div className="hidden md:block">
-          <h1 className="text-2xl font-black text-[#111827] flex items-center gap-2.5">
-            <ShoppingBag className="text-[#193CA5]" /> Riwayat & Status Pesanan
-          </h1>
-          <p className="text-sm text-gray-500 mt-1">Pantau pesanan yang sedang berjalan dan lihat histori pesananmu</p>
-        </div>
+      {/* ── CONTENT ── */}
+      <div className="flex-1 min-h-0 overflow-y-auto px-5 pt-4 space-y-3.5 pb-8">
+        {orders.map(order => {
+          const isOngoing = order.status === 'Dalam Perjalanan';
+          const badge = STATUS_CONFIG[order.status] || STATUS_CONFIG['Selesai'];
 
-        {/* Orders Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          {orders.map(order => {
-            const isOngoing = order.status === 'Dalam Perjalanan';
-            const badge = STATUS_CONFIG[order.status] || STATUS_CONFIG['Selesai'];
-
-            return (
-              <div
-                key={order.id}
-                className="bg-white rounded-3xl p-5 md:p-6 border border-gray-150 shadow-xs hover:shadow-md transition-all space-y-4"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-blue-50 text-2xl flex items-center justify-center shadow-xs shrink-0">
-                      {order.emoji}
-                    </div>
-                    <div>
-                      <h3 className="text-base font-extrabold text-[#111827]">{order.restaurant}</h3>
-                      <p className="text-xs text-gray-400 flex items-center gap-1 mt-0.5">
-                        <Clock size={12} /> {order.date} • ID: {order.id}
-                      </p>
-                    </div>
+          return (
+            <div
+              key={order.id}
+              className="bg-white rounded-2xl p-4 border border-gray-150 shadow-2xs space-y-3"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-xl flex items-center justify-center shadow-2xs shrink-0">
+                    {order.emoji}
                   </div>
-
-                  <span className={`text-[11px] font-bold px-3 py-1 rounded-full ${badge.bg} ${badge.text}`}>
-                    {order.status}
-                  </span>
-                </div>
-
-                <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100 space-y-1">
-                  <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider block">Menu</span>
-                  <p className="text-xs sm:text-sm font-medium text-gray-800 leading-relaxed">{order.items}</p>
-                </div>
-
-                <div className="flex items-center justify-between pt-2 border-t border-gray-100">
                   <div>
-                    <span className="text-[11px] text-gray-400 block">Total Pembayaran</span>
-                    <span className="text-base font-black text-[#193CA5]">{formatRupiah(order.total)}</span>
+                    <h3 className="text-xs font-extrabold text-[#111827]">{order.restaurant}</h3>
+                    <p className="text-[10px] text-gray-400 flex items-center gap-1 mt-0.5">
+                      <Clock size={11} /> {order.date}
+                    </p>
                   </div>
-
-                  {isOngoing ? (
-                    <Link href={`/tracking/${order.id}`}>
-                      <button className="bg-[#193CA5] hover:bg-[#15328A] text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-xl transition-all shadow-md shadow-[#193CA5]/25 flex items-center gap-1.5 cursor-pointer">
-                        Lacak Pesanan <ChevronRight size={14} />
-                      </button>
-                    </Link>
-                  ) : (
-                    <Link href="/food">
-                      <button className="bg-gray-50 hover:bg-gray-100 text-[#193CA5] border border-blue-200 text-xs sm:text-sm font-bold px-5 py-2.5 rounded-xl transition-all cursor-pointer">
-                        Pesan Lagi
-                      </button>
-                    </Link>
-                  )}
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      </main>
 
-      {/* ── MOBILE BOTTOM NAV ── */}
+                <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${badge.bg} ${badge.text}`}>
+                  {order.status}
+                </span>
+              </div>
+
+              <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
+                <p className="text-xs text-gray-700 leading-relaxed font-medium">{order.items}</p>
+              </div>
+
+              <div className="flex items-center justify-between pt-1 border-t border-gray-100">
+                <div>
+                  <span className="text-[10px] text-gray-400 block">Total</span>
+                  <span className="text-xs font-black text-[#193CA5]">{formatRupiah(order.total)}</span>
+                </div>
+
+                {isOngoing ? (
+                  <Link href={`/tracking/${order.id}`}>
+                    <button className="bg-[#193CA5] hover:bg-[#15328A] text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-xs flex items-center gap-1 cursor-pointer">
+                      Lacak <ChevronRight size={13} />
+                    </button>
+                  </Link>
+                ) : (
+                  <Link href="/food">
+                    <button className="bg-gray-50 hover:bg-gray-100 text-[#193CA5] border border-blue-200 text-xs font-bold px-3.5 py-1.5 rounded-xl transition-all cursor-pointer">
+                      Pesan Lagi
+                    </button>
+                  </Link>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* ── BOTTOM NAV ── */}
       <BottomNav />
     </div>
   );

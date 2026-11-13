@@ -3,50 +3,47 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { MapPin, Bell, Search, ChevronDown, ChevronRight, Star, Clock, Sparkles } from 'lucide-react';
+import { MapPin, Bell, Search, ChevronDown, ChevronRight, Star, Clock } from 'lucide-react';
 import MobileStatusBar from '@/components/shared/MobileStatusBar';
 import WUSLogo from '@/components/shared/WUSLogo';
 import BottomNav from '@/components/navigation/BottomNav';
 
 const SERVICES = [
-  { id: 'food', name: 'WUSFood', emoji: '🍔', desc: 'Makanan Favorit', bg: '#FFF3EE', href: '/food' },
-  { id: 'mart', name: 'WUSMart', emoji: '🛒', desc: 'Belanja Harian', bg: '#EAF1FF', href: '/services/mart' },
-  { id: 'car',  name: 'WUSCar',  emoji: '🚗', desc: 'Sewa Mobil', bg: '#ECFDF5', href: '/services/car' },
-  { id: 'ride', name: 'WUSRide', emoji: '🏍️', desc: 'Ojek Cepat', bg: '#FFFBEB', href: '/services/ride' },
-  { id: 'move', name: 'WUSMove', emoji: '📦', desc: 'Pindahan Praktis', bg: '#F5F3FF', href: '/services/move' },
-  { id: 'send', name: 'WUSSend', emoji: '📨', desc: 'Kirim Paket', bg: '#FEF2F2', href: '/services/send' },
+  { id: 'food', name: 'WUSFood', emoji: '🍔', bg: '#FFF3EE', href: '/food' },
+  { id: 'mart', name: 'WUSMart', emoji: '🛒', bg: '#EAF1FF', href: '/services/mart' },
+  { id: 'car',  name: 'WUSCar',  emoji: '🚗', bg: '#ECFDF5', href: '/services/car' },
+  { id: 'ride', name: 'WUSRide', emoji: '🏍️', bg: '#FFFBEB', href: '/services/ride' },
+  { id: 'move', name: 'WUSMove', emoji: '📦', bg: '#F5F3FF', href: '/services/move' },
+  { id: 'send', name: 'WUSSend', emoji: '📨', bg: '#FEF2F2', href: '/services/send' },
 ];
 
 const RESTAURANTS = [
   {
     id: 'mr-burger',
     name: 'MR Burger',
-    category: 'Burger & Fast Food',
+    category: 'Burger',
     rating: 4.8,
     reviews: '100rb+',
     time: '± 30 min',
-    distance: '1.2 km',
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=200&fit=crop',
   },
   {
     id: 'bobamilk',
     name: 'BOBAMILK',
-    category: 'Minuman Kekinian',
+    category: 'Minuman',
     rating: 4.8,
     reviews: '100rb+',
     time: '± 25 min',
-    distance: '0.8 km',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop',
   },
   {
     id: 'mr-kebab',
     name: 'MR KEBAB',
-    category: 'Kebab & Cemilan',
+    category: 'Kebab',
     rating: 4.5,
     reviews: '80rb+',
     time: '± 35 min',
-    distance: '2.1 km',
-    image: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=200&h=200&fit=crop',
   },
 ];
 
@@ -54,7 +51,7 @@ export default function HomePage() {
   const router = useRouter();
   const [search, setSearch] = useState('');
 
-  // Auth guard: jika belum login, redirect ke sign-in
+  // Auth guard
   useEffect(() => {
     const session = sessionStorage.getItem('wus_demo_session');
     if (!session) {
@@ -70,215 +67,183 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col pb-24 md:pb-12 select-none">
-      <MobileStatusBar />
+    <div className="min-h-screen bg-[#F5F6FA] flex flex-col relative pb-24 select-none">
+      {/* ── STATUS BAR ── */}
+      <MobileStatusBar variant="dark" />
 
-      {/* ── MOBILE-ONLY HEADER (hidden on desktop because DesktopNavbar is active) ── */}
-      <header className="md:hidden px-5 pt-3 pb-4 bg-white border-b border-gray-100 shadow-2xs">
+      {/* ── HEADER ── */}
+      <header className="px-5 pt-1.5 pb-4 bg-white border-b border-gray-100 shadow-2xs">
+        {/* Top row: WUS Logo & Notification Bell */}
         <div className="flex items-center justify-between mb-3">
           <Link href="/">
             <WUSLogo layout="horizontal" variant="blue" showSubtitle={true} />
           </Link>
           <Link href="/notifications">
-            <div className="w-9 h-9 rounded-full bg-gray-50 hover:bg-gray-100 flex items-center justify-center text-gray-700 relative transition-colors">
+            <div className="w-9 h-9 rounded-full bg-gray-50 hover:bg-gray-100 flex items-center justify-center text-gray-700 relative transition-colors shadow-2xs">
               <Bell size={17} />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
             </div>
           </Link>
         </div>
 
-        {/* Address Row */}
+        {/* Address Row with comfortable spacing */}
         <div className="flex items-center gap-2 mb-3 text-gray-700">
           <MapPin size={14} className="text-[#193CA5] shrink-0" />
           <button className="flex items-center gap-1.5 text-left">
-            <span className="text-xs text-gray-500">Antar ke:</span>
-            <span className="text-xs font-bold text-[#171717] truncate max-w-[210px]">
+            <span className="text-xs text-gray-500 font-medium">Antar ke:</span>
+            <span className="text-xs font-bold text-[#111827] truncate max-w-[210px]">
               Jl. Melati No.12, Surakarta
             </span>
             <ChevronDown size={13} className="text-gray-400" />
           </button>
         </div>
 
-        {/* Search Input */}
-        <form onSubmit={handleSearchSubmit} className="flex items-center bg-[#F1F5F9] rounded-full px-4 py-3 gap-3 border border-transparent focus-within:border-blue-200 focus-within:bg-white transition-all shadow-2xs">
+        {/* Search Bar with Generous Internal Padding */}
+        <form onSubmit={handleSearchSubmit} className="flex items-center bg-[#F1F5F9] rounded-full px-4 py-2.5 gap-2.5 border border-transparent focus-within:border-blue-200 focus-within:bg-white transition-all shadow-2xs">
           <Search size={16} className="text-gray-400 shrink-0" />
           <input
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Cari makanan, minuman, atau layanan"
-            className="flex-1 text-xs outline-none bg-transparent text-gray-700 placeholder:text-gray-400 font-medium"
+            className="flex-1 text-xs outline-none bg-transparent text-gray-800 placeholder:text-gray-400 font-medium"
           />
         </form>
       </header>
 
-      {/* ── MAIN CONTENT (Laptop/Desktop Responsive Container) ── */}
-      <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5 md:py-8 space-y-6 md:space-y-8">
-        {/* ── BANNERS SECTION (Responsive 2-column on desktop) ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          {/* Banner 1: Pesan Apa Aja di WUS Delivery */}
-          <div
-            className="rounded-3xl text-white relative overflow-hidden shadow-sm flex items-center justify-between p-6 md:p-8"
-            style={{ background: 'linear-gradient(135deg, #123099 0%, #193CA5 60%, #2563eb 100%)' }}
-          >
-            {/* Background glow circle */}
-            <div className="absolute -right-12 -bottom-12 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
-
-            <div className="relative z-10 max-w-[65%] space-y-2">
-              <span className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-200 bg-white/10 px-3 py-1 rounded-full uppercase tracking-wider">
-                <Sparkles size={12} /> Cepat & Hemat
-              </span>
-              <h2 className="text-base sm:text-lg md:text-xl font-black leading-tight text-white">
-                Pesan Apa Aja
-                <span className="block text-white/95 text-lg md:text-2xl mt-0.5">di WUS Delivery</span>
-              </h2>
-              <p className="text-xs sm:text-sm text-white/85 pb-1">Lebih hemat dengan promo diskon tiap hari!</p>
-              <Link href="/food" className="inline-block pt-1">
-                <button className="bg-white hover:bg-gray-100 text-[#193CA5] text-xs md:text-sm font-extrabold px-5 py-2.5 rounded-full flex items-center gap-2 shadow-md active:scale-95 transition-all">
-                  Pesan Sekarang <ChevronRight size={14} />
-                </button>
-              </Link>
-            </div>
-
-            {/* Courier Visual */}
-            <div className="relative z-10 shrink-0 flex items-center justify-center pl-2">
-              <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-2xl bg-white/10 backdrop-blur-xs flex items-center justify-center border border-white/20 shadow-inner">
-                <span className="text-5xl sm:text-6xl transform -scale-x-100 drop-shadow-md">🛵</span>
-              </div>
-            </div>
+      {/* ── MAIN SCROLLABLE CONTENT ── */}
+      <main className="flex-1 min-h-0 overflow-y-auto px-5 pt-4 pb-8 space-y-4">
+        {/* Banner 1: Pesan Apa Aja di WUS Delivery */}
+        <div
+          className="rounded-2xl text-white relative overflow-hidden shadow-sm flex items-center justify-between"
+          style={{ background: 'linear-gradient(135deg, #1432A0 0%, #193CA5 100%)', padding: '20px 18px' }}
+        >
+          <div className="relative z-10 space-y-1.5 max-w-[200px]">
+            <h2 className="text-xs font-bold leading-tight text-white/90">Pesan Apa Aja</h2>
+            <h3 className="text-base font-black leading-tight text-white">di WUS Delivery</h3>
+            <p className="text-[11px] text-white/80 pb-1 leading-snug">lebih hemat dengan promo!</p>
+            <Link href="/food" className="inline-block pt-0.5">
+              <button className="bg-white hover:bg-gray-100 text-[#193CA5] text-xs font-black px-4 py-2 rounded-full flex items-center gap-1.5 shadow-sm active:scale-95 transition-all cursor-pointer">
+                Pesan Sekarang <ChevronRight size={12} />
+              </button>
+            </Link>
           </div>
 
-          {/* Banner 2: PROMO SPESIAL Diskon s.d 50% */}
-          <div
-            className="rounded-3xl text-white relative overflow-hidden shadow-sm flex items-center justify-between p-6 md:p-8"
-            style={{ background: 'linear-gradient(135deg, #0e2b8c 0%, #1e40af 60%, #3b82f6 100%)' }}
-          >
-            {/* Background glow circle */}
-            <div className="absolute -left-12 -top-12 w-48 h-48 bg-yellow-400/10 rounded-full blur-2xl pointer-events-none" />
-
-            <div className="relative z-10 max-w-[65%] space-y-2">
-              <span className="bg-yellow-300 text-yellow-950 text-[10px] md:text-xs font-black px-3 py-1.5 rounded-full uppercase tracking-wider inline-block shadow-xs">
-                PROMO SPESIAL
-              </span>
-              <div className="pt-1">
-                <p className="text-xs text-white/85 font-medium">Diskon hingga</p>
-                <p className="text-3xl md:text-4xl font-black text-white leading-none my-1 tracking-tight">50%</p>
-                <p className="text-xs md:text-sm text-white/80 font-medium">untuk semua restoran & layanan</p>
-              </div>
-              <Link href="/promo" className="inline-block pt-1">
-                <button className="bg-yellow-300 hover:bg-yellow-400 text-yellow-950 text-xs md:text-sm font-black px-5 py-2.5 rounded-full flex items-center gap-1.5 shadow-md active:scale-95 transition-all">
-                  Klaim Diskon <ChevronRight size={14} />
-                </button>
-              </Link>
-            </div>
-
-            {/* Food Promo Visual (Clean, no broken boxes) */}
-            <div className="relative z-10 shrink-0 flex items-center justify-center pl-2">
-              <div className="relative flex items-center">
-                <div className="w-18 h-18 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-white/30 shadow-lg bg-white/10 flex items-center justify-center">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=200&fit=crop"
-                    alt="Burger Promo"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-amber-500 border-2 border-white shadow-md flex items-center justify-center text-2xl sm:text-3xl -ml-5 sm:-ml-7 -mt-6 transform rotate-6">
-                  <span>🌭</span>
-                </div>
-              </div>
+          {/* Courier Visual - Positioned cleanly without overlapping text */}
+          <div className="relative z-10 shrink-0 flex items-center justify-center pl-2">
+            <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center">
+              <span className="text-4xl transform -scale-x-100 drop-shadow-md">🛵</span>
             </div>
           </div>
         </div>
 
-        {/* ── SECTION: LAYANAN WUS (Spacious Responsive Grid) ── */}
-        <section className="bg-white rounded-3xl p-5 md:p-8 border border-gray-100 shadow-xs">
-          <div className="flex items-center justify-between mb-5 px-1">
-            <div>
-              <h3 className="font-extrabold text-base md:text-lg text-[#111827] flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#193CA5]" />
-                Layanan WUS
-              </h3>
-              <p className="text-xs text-gray-500 mt-0.5 hidden sm:block">Pilih layanan yang Anda butuhkan dengan cepat</p>
-            </div>
-            <Link href="/food" className="text-xs md:text-sm font-bold text-[#193CA5] hover:text-[#15328A] flex items-center gap-1">
+        {/* Section: Layanan WUS (3x2 Grid with Generous Box Spacing) */}
+        <div>
+          <div className="flex items-center justify-between mb-3 px-1">
+            <h3 className="font-extrabold text-xs text-[#111827] flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#193CA5]" />
+              Layanan WUS
+            </h3>
+            <Link href="/food" className="text-xs font-bold text-[#193CA5] flex items-center gap-0.5 hover:underline">
               Lihat Semua &rsaquo;
             </Link>
           </div>
 
-          {/* 6 Responsive Grid Service Cards with Generous Spacing */}
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4 md:gap-5">
+          {/* 6 Grid Cards with Ample Internal Space */}
+          <div className="grid grid-cols-3 gap-3">
             {SERVICES.map(s => (
-              <Link key={s.id} href={s.href} className="group">
-                <div className="bg-[#F8FAFC] group-hover:bg-white rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center gap-2.5 border border-gray-100 group-hover:border-blue-200 group-hover:shadow-md active:scale-95 transition-all text-center">
+              <Link key={s.id} href={s.href}>
+                <div className="bg-white rounded-2xl py-3.5 px-2 flex flex-col items-center justify-center gap-2 border border-gray-150 shadow-2xs hover:border-blue-200 active:scale-95 transition-all text-center">
                   <div
-                    className="w-13 h-13 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl shadow-xs group-hover:scale-110 transition-transform"
+                    className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shadow-2xs"
                     style={{ backgroundColor: s.bg }}
                   >
                     {s.emoji}
                   </div>
-                  <div>
-                    <span className="text-xs sm:text-sm font-bold text-[#111827] block tracking-tight">{s.name}</span>
-                    <span className="text-[10px] text-gray-400 hidden lg:block mt-0.5">{s.desc}</span>
-                  </div>
+                  <span className="text-[11px] font-bold text-[#111827] tracking-tight block px-1">
+                    {s.name}
+                  </span>
                 </div>
               </Link>
             ))}
           </div>
-        </section>
+        </div>
 
-        {/* ── SECTION: RESTORAN TERDEKAT (Spacious Responsive Grid) ── */}
-        <section className="bg-white rounded-3xl p-5 md:p-8 border border-gray-100 shadow-xs">
-          <div className="flex items-center justify-between mb-5 px-1">
-            <div>
-              <h3 className="font-extrabold text-base md:text-lg text-[#111827]">Restoran Terdekat</h3>
-              <p className="text-xs text-gray-500 mt-0.5 hidden sm:block">Pilihan kuliner terpopuler siap diantar ke lokasimu</p>
+        {/* Banner 2: PROMO SPESIAL Diskon s.d 50% */}
+        <div
+          className="rounded-2xl text-white relative overflow-hidden shadow-sm flex items-center justify-between"
+          style={{ background: 'linear-gradient(135deg, #102d99 0%, #193CA5 100%)', padding: '18px 18px' }}
+        >
+          <div className="relative z-10 space-y-1 max-w-[190px]">
+            <span className="bg-yellow-300 text-yellow-950 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider inline-block shadow-2xs mb-1">
+              PROMO SPESIAL
+            </span>
+            <p className="text-[11px] text-white/85">Diskon s.d</p>
+            <p className="text-3xl font-black text-white leading-none my-0.5">50%</p>
+            <p className="text-[11px] text-white/80 leading-snug">untuk semua layanan</p>
+          </div>
+
+          {/* Clean Food Visual (No broken image boxes, clean rounded display) */}
+          <div className="relative z-10 shrink-0 flex items-center justify-center pl-2">
+            <div className="w-18 h-18 rounded-2xl overflow-hidden border-2 border-white/25 shadow-md bg-white/10 flex items-center justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=160&h=160&fit=crop"
+                alt="Burger Promo"
+                className="w-full h-full object-cover"
+              />
             </div>
-            <Link href="/food" className="text-xs md:text-sm font-bold text-[#193CA5] hover:text-[#15328A]">
+          </div>
+        </div>
+
+        {/* Section: Restoran Terdekat with Comfortable Card Padding */}
+        <div>
+          <div className="flex items-center justify-between mb-3 px-1">
+            <h3 className="font-extrabold text-xs text-[#111827]">Restoran Terdekat</h3>
+            <Link href="/food" className="text-xs font-bold text-[#193CA5] hover:underline">
               Lihat Semua &rsaquo;
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          <div className="space-y-3">
             {RESTAURANTS.map(r => (
-              <Link key={r.id} href={`/restaurant/${r.id}`} className="group">
-                <div className="bg-white rounded-2xl p-4 sm:p-5 border border-gray-150 shadow-xs group-hover:shadow-md group-hover:border-blue-200 flex flex-col sm:flex-row items-start sm:items-center gap-4 transition-all h-full">
-                  <div className="w-full sm:w-20 h-36 sm:h-20 rounded-xl overflow-hidden bg-gray-100 shrink-0 shadow-inner relative">
+              <Link key={r.id} href={`/restaurant/${r.id}`}>
+                <div className="bg-white rounded-2xl p-3.5 border border-gray-150 shadow-2xs flex items-center gap-3.5 hover:border-blue-100 active:scale-[0.99] transition-all">
+                  <div className="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 shrink-0 shadow-inner">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={r.image}
                       alt={r.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover"
                     />
                   </div>
 
-                  <div className="flex-1 min-w-0 w-full space-y-1">
-                    <div className="flex items-center justify-between">
-                      <h4 className="text-sm sm:text-base font-bold text-[#111827] truncate group-hover:text-[#193CA5] transition-colors">{r.name}</h4>
-                      <ChevronRight size={16} className="text-gray-300 group-hover:text-[#193CA5] transition-colors shrink-0" />
-                    </div>
-                    <p className="text-xs text-gray-500 truncate">{r.category}</p>
-
-                    <div className="flex items-center gap-2 pt-1 text-gray-500">
-                      <div className="flex items-center gap-1 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200/60">
-                        <Star size={12} className="fill-amber-400 text-amber-400" />
-                        <span className="text-xs font-bold text-gray-800">{r.rating}</span>
+                  <div className="flex-1 min-w-0 pr-1 space-y-1">
+                    <h4 className="text-xs font-extrabold text-[#111827] truncate">{r.name}</h4>
+                    <div className="flex items-center gap-2 text-gray-500">
+                      <div className="flex items-center gap-1 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200/50">
+                        <Star size={11} className="fill-amber-400 text-amber-400" />
+                        <span className="text-[11px] font-bold text-gray-800">{r.rating}</span>
                       </div>
-                      <span className="text-xs text-gray-400">({r.reviews})</span>
+                      <span className="text-[11px] text-gray-400">({r.reviews})</span>
                       <span className="text-gray-300 text-xs">•</span>
-                      <div className="flex items-center gap-1 text-gray-400">
+                      <div className="flex items-center gap-1 text-gray-400 text-[11px]">
                         <Clock size={11} />
-                        <span className="text-xs">{r.time}</span>
+                        <span>{r.time}</span>
                       </div>
                     </div>
                   </div>
+
+                  <ChevronRight size={16} className="text-gray-300 shrink-0" />
                 </div>
               </Link>
             ))}
           </div>
-        </section>
+        </div>
+
+        <div className="h-4" />
       </main>
 
-      {/* ── MOBILE BOTTOM NAV (Hidden on desktop) ── */}
+      {/* ── BOTTOM NAV ── */}
       <BottomNav />
     </div>
   );

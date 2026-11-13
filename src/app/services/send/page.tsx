@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, MapPin, Navigation, Send as SendIcon, Package } from 'lucide-react';
+import { ChevronLeft, MapPin, Navigation, Send as SendIcon } from 'lucide-react';
 import MobileStatusBar from '@/components/shared/MobileStatusBar';
 
 export default function WUSSendPage() {
@@ -20,11 +20,12 @@ export default function WUSSendPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col pb-28 md:pb-12 select-none">
-      <MobileStatusBar />
+    <div className="min-h-screen bg-[#F5F6FA] flex flex-col relative pb-28 select-none">
+      {/* ── STATUS BAR ── */}
+      <MobileStatusBar variant="dark" />
 
-      {/* ── MOBILE HEADER (Hidden on desktop) ── */}
-      <div className="md:hidden bg-white px-5 pt-3 pb-3.5 flex items-center justify-between border-b border-gray-100 shadow-2xs">
+      {/* ── HEADER ── */}
+      <div className="bg-white px-5 pt-2 pb-3.5 flex items-center justify-between border-b border-gray-100 shadow-2xs">
         <button
           onClick={() => router.push('/')}
           className="w-9 h-9 bg-gray-50 rounded-xl flex items-center justify-center text-gray-700 active:scale-95"
@@ -38,118 +39,94 @@ export default function WUSSendPage() {
         <div className="w-9" />
       </div>
 
-      {/* ── MAIN CONTENT (Laptop/Desktop Responsive Layout) ── */}
-      <main className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-5 md:py-8 flex-1 space-y-6">
-        <div className="hidden md:block">
-          <h1 className="text-2xl font-black text-[#111827] flex items-center gap-2">
-            <SendIcon className="text-[#EF4444]" /> WUSSend — Pengiriman Paket & Dokumen Kilat
-          </h1>
-          <p className="text-sm text-gray-500 mt-1">Kirim paket, pakaian, dokumen, atau barang dagangan sampai dalam 1-2 jam</p>
-        </div>
-
-        {/* Banner */}
-        <div className="bg-gradient-to-r from-rose-500 via-red-500 to-rose-600 rounded-3xl p-6 md:p-8 text-white shadow-sm flex items-center justify-between">
-          <div className="space-y-1">
-            <h2 className="text-base sm:text-xl font-black">Kirim Paket Kilat Se-Kota</h2>
-            <p className="text-xs sm:text-sm text-white/90">Garansi paket aman & live tracking kurir di peta</p>
+      {/* ── CONTENT ── */}
+      <div className="flex-1 min-h-0 overflow-y-auto px-5 pt-4 space-y-4 pb-8">
+        <div className="bg-gradient-to-r from-rose-500 to-red-500 rounded-2xl p-4 text-white shadow-sm flex items-center justify-between">
+          <div className="space-y-0.5">
+            <h2 className="text-xs font-bold">Kirim Paket Kilat Se-Kota</h2>
+            <p className="text-[11px] text-white/85">Cepat, aman & live tracking di peta</p>
           </div>
-          <span className="text-4xl sm:text-5xl">📨</span>
+          <span className="text-3xl">📨</span>
         </div>
 
-        {/* Form Sender & Recipient */}
-        <div className="bg-white rounded-3xl p-6 border border-gray-150 shadow-xs space-y-4">
-          <h3 className="text-sm font-extrabold text-[#111827] pb-2 border-b border-gray-100">
-            Detail Alamat Pengirim & Penerima
-          </h3>
+        <div className="bg-white rounded-2xl p-4 border border-gray-150 shadow-2xs space-y-3">
+          <h3 className="text-xs font-extrabold text-[#111827]">Detail Pengiriman</h3>
 
-          <div className="space-y-3.5">
-            <div>
-              <label className="text-xs font-bold text-gray-500 mb-1.5 block">Alamat Pengirim (Penjemputan)</label>
-              <div className="flex items-center bg-[#F8FAFC] border border-gray-200 rounded-2xl px-4 py-3 gap-3 focus-within:border-red-500 focus-within:bg-white transition-all">
-                <MapPin size={18} className="text-red-500 shrink-0" />
-                <input
-                  value={sender}
-                  onChange={e => setSender(e.target.value)}
-                  placeholder="Alamat lengkap pengirim"
-                  className="flex-1 text-xs sm:text-sm outline-none bg-transparent text-gray-800 font-medium"
-                />
-              </div>
+          <div>
+            <label className="text-[11px] font-bold text-gray-500 mb-1 block">Alamat Pengirim</label>
+            <div className="flex items-center bg-[#F8FAFC] border border-gray-200 rounded-xl px-3.5 py-2.5 gap-2.5 focus-within:border-red-500">
+              <MapPin size={15} className="text-red-500 shrink-0" />
+              <input
+                value={sender}
+                onChange={e => setSender(e.target.value)}
+                placeholder="Alamat asal penjemputan"
+                className="flex-1 text-xs outline-none bg-transparent text-gray-800 font-medium"
+              />
             </div>
+          </div>
 
-            <div>
-              <label className="text-xs font-bold text-gray-500 mb-1.5 block">Alamat Penerima (Tujuan)</label>
-              <div className="flex items-center bg-[#F8FAFC] border border-gray-200 rounded-2xl px-4 py-3 gap-3 focus-within:border-[#193CA5] focus-within:bg-white transition-all">
-                <Navigation size={18} className="text-[#193CA5] shrink-0" />
-                <input
-                  value={recipient}
-                  onChange={e => setRecipient(e.target.value)}
-                  placeholder="Alamat lengkap penerima paket"
-                  className="flex-1 text-xs sm:text-sm outline-none bg-transparent text-gray-800 font-medium"
-                />
-              </div>
+          <div>
+            <label className="text-[11px] font-bold text-gray-500 mb-1 block">Alamat Penerima</label>
+            <div className="flex items-center bg-[#F8FAFC] border border-gray-200 rounded-xl px-3.5 py-2.5 gap-2.5 focus-within:border-[#193CA5]">
+              <Navigation size={15} className="text-[#193CA5] shrink-0" />
+              <input
+                value={recipient}
+                onChange={e => setRecipient(e.target.value)}
+                placeholder="Alamat tujuan pengantaran"
+                className="flex-1 text-xs outline-none bg-transparent text-gray-800 font-medium"
+              />
             </div>
+          </div>
 
-            <div>
-              <label className="text-xs font-bold text-gray-500 mb-1.5 block">Deskripsi Barang yang Dikirim</label>
-              <div className="flex items-center bg-[#F8FAFC] border border-gray-200 rounded-2xl px-4 py-3 gap-3 focus-within:border-gray-400 focus-within:bg-white transition-all">
-                <Package size={18} className="text-gray-400 shrink-0" />
-                <input
-                  value={itemDesc}
-                  onChange={e => setItemDesc(e.target.value)}
-                  placeholder="Contoh: Dokumen map merah, Pakaian, Kue ultah"
-                  className="flex-1 text-xs sm:text-sm outline-none bg-transparent text-gray-800 font-medium"
-                />
-              </div>
-            </div>
+          <div>
+            <label className="text-[11px] font-bold text-gray-500 mb-1 block">Deskripsi Barang</label>
+            <input
+              value={itemDesc}
+              onChange={e => setItemDesc(e.target.value)}
+              placeholder="Contoh: Dokumen, baju, makanan"
+              className="w-full bg-[#F8FAFC] border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs outline-none text-gray-800 font-medium focus:border-gray-400"
+            />
           </div>
         </div>
 
-        {/* Speed Option */}
-        <div className="bg-white rounded-3xl p-6 border border-gray-150 shadow-xs space-y-4">
-          <h3 className="text-sm font-extrabold text-[#111827] pb-2 border-b border-gray-100">
-            Pilih Layanan Kecepatan
-          </h3>
+        <div className="bg-white rounded-2xl p-4 border border-gray-150 shadow-2xs space-y-2.5">
+          <h3 className="text-xs font-extrabold text-[#111827]">Layanan Kecepatan</h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-2">
             {[
-              { id: 'instant', name: 'Instant Delivery', desc: 'Sampai dalam 1-2 jam langsung diantar', price: 'Rp 15.000', badge: 'Tercepat' },
-              { id: 'sameday', name: 'Same Day Delivery', desc: 'Sampai di hari yang sama (maks 6 jam)', price: 'Rp 9.000', badge: 'Hemat' },
+              { id: 'instant', name: 'Instant (1-2 Jam)', desc: 'Pengantaran langsung ke tujuan', price: 'Rp 15.000' },
+              { id: 'sameday', name: 'Same Day (Maks 6 Jam)', desc: 'Sampai di hari yang sama', price: 'Rp 9.000' },
             ].map(f => {
               const active = speed === f.id;
               return (
                 <div
                   key={f.id}
                   onClick={() => setSpeed(f.id as 'instant' | 'sameday')}
-                  className={`p-5 rounded-2xl border-2 flex items-center justify-between cursor-pointer transition-all ${
-                    active ? 'border-red-500 bg-red-50/40 shadow-xs' : 'border-gray-200 hover:border-gray-300 bg-white'
+                  className={`p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+                    active ? 'border-red-500 bg-red-50/40' : 'border-gray-200'
                   }`}
                 >
                   <div>
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-bold text-[#111827]">{f.name}</p>
-                      <span className="text-[10px] font-bold bg-red-100 text-red-700 px-2 py-0.5 rounded-full">
-                        {f.badge}
-                      </span>
-                    </div>
-                    <p className="text-xs text-gray-500 mt-1">{f.desc}</p>
+                    <p className="text-xs font-bold text-[#111827]">{f.name}</p>
+                    <p className="text-[10px] text-gray-500">{f.desc}</p>
                   </div>
-                  <span className="text-sm font-black text-red-600 shrink-0">{f.price}</span>
+                  <span className="text-xs font-black text-red-600">{f.price}</span>
                 </div>
               );
             })}
           </div>
         </div>
+      </div>
 
-        {/* Action Button */}
-        <div className="pt-2">
-          <button
-            onClick={estimate}
-            className="w-full bg-[#EF4444] hover:bg-[#DC2626] active:scale-[0.98] text-white font-extrabold py-4 px-6 rounded-2xl text-sm sm:text-base transition-all shadow-md shadow-red-500/25 cursor-pointer"
-          >
-            {estimated ? `Pesan Kurir • Rp ${estimated.toLocaleString('id-ID')}` : 'Cek Biaya Ongkir Paket'}
-          </button>
-        </div>
-      </main>
+      {/* ── FIXED BOTTOM CTA ── */}
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-5 py-3.5 bg-white border-t border-gray-150 z-50 shadow-lg">
+        <button
+          onClick={estimate}
+          className="w-full bg-[#EF4444] hover:bg-[#DC2626] active:scale-[0.98] text-white font-extrabold py-3.5 rounded-full text-xs transition-all shadow-md shadow-red-500/25 cursor-pointer"
+        >
+          {estimated ? `Pesan Sekarang • Rp ${estimated.toLocaleString('id-ID')}` : 'Cek Biaya Ongkir'}
+        </button>
+      </div>
     </div>
   );
 }
