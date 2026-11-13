@@ -2,29 +2,29 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, MapPin, Truck } from 'lucide-react';
+import { ChevronLeft, MapPin, Navigation, Truck } from 'lucide-react';
 import MobileStatusBar from '@/components/shared/MobileStatusBar';
 
 export default function WUSMovePage() {
   const router = useRouter();
-  const [origin, setOrigin] = useState('Jl. Melati No.12, Surakarta');
+  const [pickup, setPickup] = useState('Jl. Melati No.12, Surakarta');
   const [destination, setDestination] = useState('');
-  const [fleet, setFleet] = useState<'pickup' | 'box'>('pickup');
+  const [vehicle, setVehicle] = useState<'pickup' | 'engkel' | 'blindvan'>('pickup');
   const [estimated, setEstimated] = useState<number | null>(null);
 
-  const calculate = () => {
-    if (origin && destination) {
-      setEstimated(fleet === 'pickup' ? 120000 : 250000);
+  const estimate = () => {
+    if (pickup && destination) {
+      const priceMap = { pickup: 120000, engkel: 250000, blindvan: 95000 };
+      setEstimated(priceMap[vehicle]);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F6FA] flex flex-col relative pb-28 select-none">
-      {/* ── STATUS BAR ── */}
-      <MobileStatusBar variant="dark" className="page-px px-5" />
+    <div className="min-h-screen bg-[#F8FAFC] flex flex-col pb-28 md:pb-12 select-none">
+      <MobileStatusBar />
 
-      {/* ── HEADER ── */}
-      <div className="bg-white page-px px-5 pt-2 pb-3.5 flex items-center justify-between border-b border-gray-100">
+      {/* ── MOBILE HEADER (Hidden on desktop) ── */}
+      <div className="md:hidden bg-white px-5 pt-3 pb-3.5 flex items-center justify-between border-b border-gray-100 shadow-2xs">
         <button
           onClick={() => router.push('/')}
           className="w-9 h-9 bg-gray-50 rounded-xl flex items-center justify-center text-gray-700 active:scale-95"
@@ -33,95 +33,109 @@ export default function WUSMovePage() {
         </button>
         <div className="flex items-center gap-1.5">
           <Truck size={18} className="text-[#8B5CF6]" />
-          <h1 className="text-base font-extrabold text-[#171717]">WUSMove</h1>
+          <h1 className="text-base font-extrabold text-[#111827]">WUSMove</h1>
         </div>
         <div className="w-9" />
       </div>
 
-      {/* ── CONTENT ── */}
-      <div className="flex-1 min-h-0 overflow-y-auto page-px px-5 pt-4 space-y-4 pb-8">
+      {/* ── MAIN CONTENT (Laptop/Desktop Responsive Layout) ── */}
+      <main className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-5 md:py-8 flex-1 space-y-6">
+        <div className="hidden md:block">
+          <h1 className="text-2xl font-black text-[#111827] flex items-center gap-2">
+            <Truck className="text-[#8B5CF6]" /> WUSMove — Jasa Pindahan Rumah & Kost
+          </h1>
+          <p className="text-sm text-gray-500 mt-1">Sewa armada pick-up & truk pindahan lengkap dengan bantuan tenaga angkut</p>
+        </div>
+
         {/* Banner */}
-        <div className="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl p-4 text-white shadow-sm flex items-center justify-between">
-          <div>
-            <h2 className="text-sm font-bold">Jasa Pindahan & Angkut</h2>
-            <p className="text-xs text-white/80 mt-0.5">Pindahan kos, rumah, atau kantor jadi mudah</p>
+        <div className="bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 rounded-3xl p-6 md:p-8 text-white shadow-sm flex items-center justify-between">
+          <div className="space-y-1">
+            <h2 className="text-base sm:text-xl font-black">Pindahan Rumah Bebas Lelah</h2>
+            <p className="text-xs sm:text-sm text-white/90">Tenaga angkut profesional & jaminan muatan aman</p>
           </div>
-          <span className="text-3xl">📦</span>
+          <span className="text-4xl sm:text-5xl">📦</span>
         </div>
 
-        {/* Form Alamat */}
-        <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm space-y-3">
-          <h3 className="text-xs font-bold text-[#171717]">Alamat Pindahan</h3>
+        {/* Route Details Card */}
+        <div className="bg-white rounded-3xl p-6 border border-gray-150 shadow-xs space-y-4">
+          <h3 className="text-sm font-extrabold text-[#111827] pb-2 border-b border-gray-100">
+            Detail Alamat Pindahan
+          </h3>
 
-          <div>
-            <label className="text-[11px] font-semibold text-gray-500 mb-1 block">Lokasi Asal</label>
-            <div className="flex items-center bg-[#F8FAFC] border border-gray-200 rounded-xl px-3 py-2.5 gap-2.5">
-              <MapPin size={15} className="text-purple-600 shrink-0" />
-              <input
-                value={origin}
-                onChange={e => setOrigin(e.target.value)}
-                placeholder="Alamat penjemputan barang"
-                className="flex-1 text-xs outline-none bg-transparent text-gray-700"
-              />
+          <div className="space-y-3.5">
+            <div>
+              <label className="text-xs font-bold text-gray-500 mb-1.5 block">Alamat Asal (Muat Barang)</label>
+              <div className="flex items-center bg-[#F8FAFC] border border-gray-200 rounded-2xl px-4 py-3 gap-3 focus-within:border-purple-500 focus-within:bg-white transition-all">
+                <MapPin size={18} className="text-purple-500 shrink-0" />
+                <input
+                  value={pickup}
+                  onChange={e => setPickup(e.target.value)}
+                  placeholder="Lokasi muat barang asal"
+                  className="flex-1 text-xs sm:text-sm outline-none bg-transparent text-gray-800 font-medium"
+                />
+              </div>
             </div>
-          </div>
 
-          <div>
-            <label className="text-[11px] font-semibold text-gray-500 mb-1 block">Lokasi Tujuan</label>
-            <div className="flex items-center bg-[#F8FAFC] border border-gray-200 rounded-xl px-3 py-2.5 gap-2.5">
-              <MapPin size={15} className="text-indigo-600 shrink-0" />
-              <input
-                value={destination}
-                onChange={e => setDestination(e.target.value)}
-                placeholder="Alamat tujuan pengantaran"
-                className="flex-1 text-xs outline-none bg-transparent text-gray-700"
-              />
+            <div>
+              <label className="text-xs font-bold text-gray-500 mb-1.5 block">Alamat Tujuan (Bongkar Barang)</label>
+              <div className="flex items-center bg-[#F8FAFC] border border-gray-200 rounded-2xl px-4 py-3 gap-3 focus-within:border-[#193CA5] focus-within:bg-white transition-all">
+                <Navigation size={18} className="text-[#193CA5] shrink-0" />
+                <input
+                  value={destination}
+                  onChange={e => setDestination(e.target.value)}
+                  placeholder="Lokasi bongkar barang tujuan"
+                  className="flex-1 text-xs sm:text-sm outline-none bg-transparent text-gray-800 font-medium"
+                />
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Tipe Kendaraan */}
-        <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm space-y-3">
-          <h3 className="text-xs font-bold text-[#171717]">Pilihan Armada Angkut</h3>
+        {/* Vehicle Selection */}
+        <div className="bg-white rounded-3xl p-6 border border-gray-150 shadow-xs space-y-4">
+          <h3 className="text-sm font-extrabold text-[#111827] pb-2 border-b border-gray-100">
+            Pilih Jenis Kendaraan Angkut
+          </h3>
 
-          <div className="space-y-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
-              { id: 'pickup', name: 'Mobil Pick-Up Bak Terbuka', desc: 'Muat kasur, lemari, kardus kosan', price: 'Mulai Rp 120.000', emoji: '🛻' },
-              { id: 'box', name: 'Truk Box Engkel Tertutup', desc: 'Aman dari hujan & muatan besar', price: 'Mulai Rp 250.000', emoji: '🚚' },
-            ].map(item => {
-              const active = fleet === item.id;
+              { id: 'blindvan', name: 'Blind Van', desc: 'Muatan kecil & tertutup', price: 'Rp 95.000', emoji: '🚐' },
+              { id: 'pickup', name: 'Pick-Up Bak', desc: 'Muatan sedang (Kasur & Lemari)', price: 'Rp 120.000', emoji: '🛻' },
+              { id: 'engkel', name: 'Truk Engkel CDE', desc: 'Muatan besar 1 rumah full', price: 'Rp 250.000', emoji: '🚛' },
+            ].map(f => {
+              const active = vehicle === f.id;
               return (
                 <div
-                  key={item.id}
-                  onClick={() => setFleet(item.id as 'pickup' | 'box')}
-                  className={`p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
-                    active ? 'border-purple-600 bg-purple-50/40' : 'border-gray-200'
+                  key={f.id}
+                  onClick={() => setVehicle(f.id as 'pickup' | 'engkel' | 'blindvan')}
+                  className={`p-5 rounded-2xl border-2 flex flex-col justify-between cursor-pointer transition-all ${
+                    active ? 'border-purple-600 bg-purple-50/50 shadow-xs' : 'border-gray-200 hover:border-gray-300 bg-white'
                   }`}
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">{item.emoji}</span>
+                  <div className="space-y-2">
+                    <span className="text-3xl">{f.emoji}</span>
                     <div>
-                      <p className="text-xs font-bold text-[#171717]">{item.name}</p>
-                      <p className="text-[10px] text-gray-500">{item.desc}</p>
+                      <p className="text-sm font-bold text-[#111827]">{f.name}</p>
+                      <p className="text-xs text-gray-500 mt-0.5">{f.desc}</p>
                     </div>
                   </div>
-                  <span className="text-xs font-extrabold text-purple-700">{item.price}</span>
+                  <span className="text-sm font-black text-purple-700 pt-3 border-t border-gray-100 mt-3">{f.price}</span>
                 </div>
               );
             })}
           </div>
         </div>
-      </div>
 
-      {/* ── BOTTOM CTA ── */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-5 py-3.5 bg-white border-t border-gray-100 z-50">
-        <button
-          onClick={calculate}
-          className="w-full bg-[#8B5CF6] hover:bg-[#7C3AED] active:scale-[0.98] text-white font-bold py-3.5 rounded-full text-sm transition-all shadow-md shadow-purple-500/25"
-        >
-          {estimated ? `Pesan WUSMove • Rp ${estimated.toLocaleString('id-ID')}` : 'Hitung Estimasi Biaya'}
-        </button>
-      </div>
+        {/* Action Button */}
+        <div className="pt-2">
+          <button
+            onClick={estimate}
+            className="w-full bg-[#8B5CF6] hover:bg-[#7C3AED] active:scale-[0.98] text-white font-extrabold py-4 px-6 rounded-2xl text-sm sm:text-base transition-all shadow-md shadow-purple-500/25 cursor-pointer"
+          >
+            {estimated ? `Pesan Armada • Rp ${estimated.toLocaleString('id-ID')}` : 'Cek Tarif Estimasi Pindahan'}
+          </button>
+        </div>
+      </main>
     </div>
   );
 }

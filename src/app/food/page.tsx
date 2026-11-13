@@ -2,12 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { MapPin, Bell, Search, ChevronDown, Star, Clock, ChevronRight } from 'lucide-react';
+import { MapPin, Bell, Search, ChevronDown, Star, Clock, ChevronRight, Sparkles } from 'lucide-react';
 import MobileStatusBar from '@/components/shared/MobileStatusBar';
 import WUSLogo from '@/components/shared/WUSLogo';
 import BottomNav from '@/components/navigation/BottomNav';
 
-const CATEGORIES = ['Semua', 'Bakso', 'Burger', 'Ayam', 'Minuman'];
+const CATEGORIES = ['Semua', 'Bakso', 'Burger', 'Ayam', 'Minuman', 'Kebab', 'Snack'];
 
 const RESTAURANTS = [
   {
@@ -17,7 +17,8 @@ const RESTAURANTS = [
     rating: 4.8,
     reviews: '100rb+',
     time: '± 30 min',
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=160&h=160&fit=crop',
+    distance: '1.2 km',
+    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop',
     emoji: '🍔',
   },
   {
@@ -27,17 +28,19 @@ const RESTAURANTS = [
     rating: 4.8,
     reviews: '100rb+',
     time: '± 25 min',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=160&h=160&fit=crop',
+    distance: '0.8 km',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
     emoji: '🧋',
   },
   {
     id: 'mr-kebab',
     name: 'MR KEBAB',
-    category: 'Semua',
+    category: 'Kebab',
     rating: 4.5,
     reviews: '80rb+',
     time: '± 35 min',
-    image: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=160&h=160&fit=crop',
+    distance: '2.1 km',
+    image: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=400&h=300&fit=crop',
     emoji: '🌯',
   },
 ];
@@ -53,18 +56,16 @@ export default function FoodPage() {
   });
 
   return (
-    <div className="min-h-screen bg-[#F5F6FA] flex flex-col relative pb-24 select-none">
-      {/* ── STATUS BAR ── */}
-      <MobileStatusBar variant="dark" className="page-px px-5" />
+    <div className="min-h-screen bg-[#F8FAFC] flex flex-col pb-24 md:pb-12 select-none">
+      <MobileStatusBar />
 
-      {/* ── HEADER ── */}
-      <header className="page-px px-5 pt-1.5 pb-4 bg-white border-b border-gray-100">
-        {/* Top row: Compact Logo, Slogan, and Bell */}
-        <div className="flex items-center justify-between mb-2.5">
+      {/* ── MOBILE HEADER (Hidden on desktop) ── */}
+      <header className="md:hidden px-5 pt-3 pb-4 bg-white border-b border-gray-100 shadow-2xs">
+        <div className="flex items-center justify-between mb-3">
           <Link href="/">
             <WUSLogo layout="horizontal" variant="blue" showSubtitle={true} />
           </Link>
-          <h1 className="text-xs font-black text-[#171717] tracking-tight">
+          <h1 className="text-xs font-black text-[#111827] tracking-tight">
             Mau makan apa hari ini?
           </h1>
           <Link href="/notifications">
@@ -79,14 +80,14 @@ export default function FoodPage() {
           <MapPin size={14} className="text-[#193CA5] shrink-0" />
           <button className="flex items-center gap-1.5 text-left">
             <span className="text-xs text-gray-500">Antar ke:</span>
-            <span className="text-xs font-bold text-[#171717] truncate max-w-[210px]">
+            <span className="text-xs font-bold text-[#111827] truncate max-w-[210px]">
               Jl. Melati No.12, Surakarta
             </span>
             <ChevronDown size={13} className="text-gray-400" />
           </button>
         </div>
 
-        {/* Search Bar with Generous Internal Padding */}
+        {/* Search Bar */}
         <div className="flex items-center bg-[#F1F5F9] rounded-full px-4 py-3 gap-3 border border-transparent focus-within:border-blue-200 focus-within:bg-white transition-all shadow-2xs">
           <Search size={16} className="text-gray-400 shrink-0" />
           <input
@@ -98,22 +99,21 @@ export default function FoodPage() {
         </div>
       </header>
 
-      {/* ── SCROLLABLE BODY ── */}
-      <main className="flex-1 min-h-0 overflow-y-auto page-px px-5 pt-3.5 pb-8 space-y-4">
-        {/* Category Filter Pills */}
-        <div className="flex items-center gap-2.5 overflow-x-auto no-scrollbar py-1">
+      {/* ── SCROLLABLE BODY (Laptop / Desktop Responsive) ── */}
+      <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5 md:py-8 space-y-6">
+        {/* Category Filter Pills with Generous Spacing */}
+        <div className="bg-white p-3 sm:p-4 rounded-2xl border border-gray-150 shadow-xs flex items-center gap-2.5 overflow-x-auto no-scrollbar">
           {CATEGORIES.map(cat => {
             const isActive = activeCategory === cat;
             return (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-5 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                className={`px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                   isActive
                     ? 'bg-[#193CA5] text-white shadow-xs'
-                    : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300'
+                    : 'bg-gray-50 text-gray-600 border border-gray-200/80 hover:bg-gray-100 hover:text-gray-900'
                 }`}
-                style={{ paddingLeft: '16px', paddingRight: '16px' }}
               >
                 {cat}
               </button>
@@ -121,69 +121,77 @@ export default function FoodPage() {
           })}
         </div>
 
-        {/* Promo Banner: Pesan Sekarang, Lebih Hemat! with Generous Padding */}
+        {/* Promo Banner: Pesan Sekarang, Lebih Hemat! */}
         <div
-          className="rounded-2xl text-white relative overflow-hidden shadow-sm flex items-center justify-between"
-          style={{ background: 'linear-gradient(135deg, #1432A0 0%, #193CA5 100%)', padding: '22px 20px 22px 22px' }}
+          className="rounded-3xl text-white relative overflow-hidden shadow-sm flex items-center justify-between p-6 md:p-8"
+          style={{ background: 'linear-gradient(135deg, #123099 0%, #193CA5 60%, #2563eb 100%)' }}
         >
-          <div style={{ maxWidth: 175, paddingRight: 8 }}>
-            <p className="text-xs font-bold text-white/90">Pesan Sekarang,</p>
-            <h2 className="text-base font-black text-white leading-tight mt-1">Lebih Hemat!</h2>
-            <p className="text-xs text-white/85 mt-2 leading-relaxed">
-              Diskon s.d <strong className="text-yellow-300 font-black text-sm">50%</strong>
+          <div className="relative z-10 max-w-[70%] space-y-2">
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-yellow-300 bg-white/10 px-3 py-1 rounded-full uppercase tracking-wider">
+              <Sparkles size={12} /> Diskon Spesial Food
+            </span>
+            <h2 className="text-base sm:text-xl md:text-2xl font-black text-white leading-tight">
+              Pesan Sekarang, Lebih Hemat!
+            </h2>
+            <p className="text-xs sm:text-sm text-white/85">
+              Diskon hingga <strong className="text-yellow-300 font-black text-sm sm:text-base">50%</strong> untuk semua menu resto favoritmu
             </p>
           </div>
 
-          {/* Visual with error fallback */}
-          <div className="flex items-center -space-x-4">
-            <div className="w-16 h-16 rounded-xl overflow-hidden border-2 border-white/20 shadow-md bg-white/10 flex items-center justify-center text-3xl">
+          <div className="relative z-10 shrink-0 pl-3">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-white/30 shadow-lg bg-white/10 flex items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=140&h=140&fit=crop"
+                src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=200&fit=crop"
                 alt="Burger"
                 className="w-full h-full object-cover"
-                onError={e => {
-                  (e.target as HTMLElement).style.display = 'none';
-                }}
               />
-            </div>
-            <div className="w-16 h-16 rounded-xl overflow-hidden border-2 border-white/20 shadow-md bg-amber-500/20 flex items-center justify-center text-3xl transform rotate-3">
-              <span className="text-3xl">🌭</span>
             </div>
           </div>
         </div>
 
-        {/* Section: Restoran Terdekat with Spacious Padding */}
-        <div>
-          <div className="flex items-center justify-between mb-3 px-1">
-            <h3 className="font-bold text-xs text-[#171717]">Restoran Terdekat</h3>
-            <span className="text-xs font-semibold text-[#193CA5]">
-              Lihat Semua &rsaquo;
+        {/* Section: Restoran Terdekat Grid */}
+        <section className="bg-white rounded-3xl p-5 md:p-8 border border-gray-100 shadow-xs">
+          <div className="flex items-center justify-between mb-5 px-1">
+            <div>
+              <h3 className="font-extrabold text-base md:text-lg text-[#111827]">
+                Pilihan Restoran Terdekat
+              </h3>
+              <p className="text-xs text-gray-500 mt-0.5">
+                Menampilkan {filtered.length} restoran di sekitar lokasimu
+              </p>
+            </div>
+            <span className="text-xs md:text-sm font-bold text-[#193CA5]">
+              Urutkan: Terdekat
             </span>
           </div>
 
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {filtered.map(r => (
-              <Link key={r.id} href={`/restaurant/${r.id}`}>
-                <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-xs flex items-center gap-4 hover:border-blue-100 active:scale-[0.99] transition-all">
-                  <div className="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 shrink-0 flex items-center justify-center text-2xl shadow-inner">
+              <Link key={r.id} href={`/restaurant/${r.id}`} className="group">
+                <div className="bg-white rounded-2xl p-4 sm:p-5 border border-gray-150 shadow-xs group-hover:shadow-md group-hover:border-blue-200 flex flex-col sm:flex-row items-start sm:items-center gap-4 transition-all h-full">
+                  <div className="w-full sm:w-22 h-36 sm:h-22 rounded-xl overflow-hidden bg-gray-100 shrink-0 shadow-inner relative">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={r.image}
                       alt={r.name}
-                      className="w-full h-full object-cover"
-                      onError={e => {
-                        (e.target as HTMLElement).style.display = 'none';
-                      }}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
 
-                  <div className="flex-1 min-w-0 pr-1">
-                    <h4 className="text-xs font-bold text-[#171717] truncate">{r.name}</h4>
-                    <div className="flex items-center gap-2 mt-1 text-gray-500">
-                      <div className="flex items-center gap-0.5">
+                  <div className="flex-1 min-w-0 w-full space-y-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-sm sm:text-base font-bold text-[#111827] truncate group-hover:text-[#193CA5] transition-colors">
+                        {r.name}
+                      </h4>
+                      <ChevronRight size={16} className="text-gray-300 group-hover:text-[#193CA5] transition-colors shrink-0" />
+                    </div>
+                    <p className="text-xs text-gray-500 truncate">{r.category}</p>
+
+                    <div className="flex items-center gap-2 pt-1 text-gray-500">
+                      <div className="flex items-center gap-1 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200/60">
                         <Star size={12} className="fill-amber-400 text-amber-400" />
-                        <span className="text-xs font-bold text-[#171717]">{r.rating}</span>
+                        <span className="text-xs font-bold text-gray-800">{r.rating}</span>
                       </div>
                       <span className="text-xs text-gray-400">({r.reviews})</span>
                       <span className="text-gray-300 text-xs">•</span>
@@ -193,18 +201,14 @@ export default function FoodPage() {
                       </div>
                     </div>
                   </div>
-
-                  <ChevronRight size={16} className="text-gray-300 shrink-0" />
                 </div>
               </Link>
             ))}
           </div>
-        </div>
-
-        <div className="h-4" />
+        </section>
       </main>
 
-      {/* ── BOTTOM NAV ── */}
+      {/* ── BOTTOM NAV (Hidden on desktop) ── */}
       <BottomNav />
     </div>
   );

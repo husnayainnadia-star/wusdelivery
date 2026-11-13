@@ -3,24 +3,29 @@
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 
-function fmt(n: number) { return 'Rp. ' + n.toLocaleString('id-ID'); }
+function fmt(n: number) {
+  return 'Rp. ' + n.toLocaleString('id-ID');
+}
 
 export default function CartFloatButton() {
   const { totalItems, totalPrice } = useCart();
   if (totalItems === 0) return null;
 
   return (
-    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] px-4 pb-5 pt-3"
-      style={{ background: 'linear-gradient(to top, #f5f6fa 60%, transparent)' }}>
-      <Link href="/cart">
-        <div className="bg-[#193CA5] rounded-2xl px-4 py-3.5 flex items-center gap-3 shadow-xl shadow-[#193CA5]/30">
-          <div className="bg-white rounded-lg w-7 h-7 flex items-center justify-center shrink-0">
-            <span className="text-[#193CA5] text-[11px] font-black">{totalItems}</span>
+    <div className="fixed bottom-4 left-0 right-0 w-full z-40 px-4 pointer-events-none">
+      <div className="max-w-lg mx-auto pointer-events-auto">
+        <Link href="/cart">
+          <div className="bg-[#193CA5] hover:bg-[#15328A] rounded-2xl px-5 py-4 flex items-center justify-between shadow-2xl shadow-[#193CA5]/40 text-white transition-all active:scale-98 cursor-pointer">
+            <div className="flex items-center gap-3">
+              <div className="bg-white rounded-xl w-8 h-8 flex items-center justify-center shrink-0">
+                <span className="text-[#193CA5] text-xs font-black">{totalItems}</span>
+              </div>
+              <span className="text-sm font-bold">Lihat Keranjang Belanja</span>
+            </div>
+            <span className="text-sm font-black">{fmt(totalPrice)} &rsaquo;</span>
           </div>
-          <span className="text-white text-xs font-bold flex-1">Tambahkan ke keranjang</span>
-          <span className="text-white text-xs font-black">{fmt(totalPrice)}</span>
-        </div>
-      </Link>
+        </Link>
+      </div>
     </div>
   );
 }

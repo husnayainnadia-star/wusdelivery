@@ -3,7 +3,7 @@
 import { use, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, Star, Plus, Minus, Heart } from 'lucide-react';
+import { ChevronLeft, Star, Plus, Minus, Heart, Clock, ShoppingBag } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import MobileStatusBar from '@/components/shared/MobileStatusBar';
 
@@ -16,28 +16,28 @@ const RESTAURANTS_DATA: Record<string, {
   avatarImg: string;
 }> = {
   'mr-burger': {
-    name: 'Mr Burger',
+    name: 'MR Burger',
     rating: 4.8,
     reviews: '100rb+',
     time: '± 30 min',
-    coverImg: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&h=300&fit=crop',
-    avatarImg: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=120&h=120&fit=crop',
+    coverImg: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=1200&h=400&fit=crop',
+    avatarImg: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=200&fit=crop',
   },
   'bobamilk': {
     name: 'BOBAMILK',
     rating: 4.8,
     reviews: '100rb+',
     time: '± 30 min',
-    coverImg: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop',
-    avatarImg: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=120&h=120&fit=crop',
+    coverImg: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=400&fit=crop',
+    avatarImg: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop',
   },
   'mr-kebab': {
     name: 'MR KEBAB',
     rating: 4.5,
     reviews: '80rb+',
     time: '± 30 min',
-    coverImg: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600&h=300&fit=crop',
-    avatarImg: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=120&h=120&fit=crop',
+    coverImg: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=1200&h=400&fit=crop',
+    avatarImg: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=200&h=200&fit=crop',
   },
 };
 
@@ -47,28 +47,32 @@ const MENU_ITEMS = [
     name: 'Hot Dog',
     price: 20000,
     category: 'Snack',
-    image: 'https://images.unsplash.com/photo-1619740455993-9d492ce96ab7?w=150&h=150&fit=crop',
+    description: 'Sosis sapi bakar dengan mayones spesial & saus mustard',
+    image: 'https://images.unsplash.com/photo-1619740455993-9d492ce96ab7?w=200&h=200&fit=crop',
   },
   {
     id: 'p2',
     name: 'Beef Burger',
     price: 30000,
     category: 'Burger',
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=150&h=150&fit=crop',
+    description: 'Patty daging sapi tebal dengan keju cheddar leleh',
+    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=200&fit=crop',
   },
   {
     id: 'p3',
-    name: 'Chiken Burger',
+    name: 'Chicken Burger',
     price: 20000,
     category: 'Burger',
-    image: 'https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=150&h=150&fit=crop',
+    description: 'Fillet ayam krispi renyah dengan selada segar',
+    image: 'https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=200&h=200&fit=crop',
   },
   {
     id: 'p4',
     name: 'French Fries',
     price: 15000,
     category: 'Snack',
-    image: 'https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=150&h=150&fit=crop',
+    description: 'Kentang goreng gurih renyah dengan bumbu istimewa',
+    image: 'https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=200&h=200&fit=crop',
   },
 ];
 
@@ -101,7 +105,7 @@ export default function RestaurantDetailPage({ params }: { params: Promise<{ id:
         id: item.id,
         restaurantId: id,
         name: item.name,
-        description: '',
+        description: item.description,
         price: item.price,
         image: item.image,
         category: item.category,
@@ -113,167 +117,193 @@ export default function RestaurantDetailPage({ params }: { params: Promise<{ id:
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F6FA] flex flex-col relative pb-24 select-none">
-      <div>
-        {/* Cover Hero Banner with Status Bar */}
-        <div className="relative h-56 bg-slate-800">
+    <div className="min-h-screen bg-[#F8FAFC] flex flex-col pb-28 md:pb-24 select-none">
+      <MobileStatusBar />
+
+      {/* ── MAIN CONTENT (Laptop/Desktop Responsive Layout) ── */}
+      <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5 md:py-8 space-y-6">
+        {/* Restaurant Hero Cover Card */}
+        <div className="relative rounded-3xl overflow-hidden shadow-sm bg-gray-900 h-52 sm:h-64 md:h-80">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={restaurant.coverImg}
             alt={restaurant.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover opacity-85"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />
 
-          {/* Mobile Status Bar overlay */}
-          <div className="absolute top-0 left-0 right-0 z-20">
-            <MobileStatusBar variant="light" />
-          </div>
-
-          {/* Top navigation actions */}
-          <div className="absolute top-9 left-4 right-4 flex items-center justify-between z-20">
+          {/* Floating Action Buttons */}
+          <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
             <button
               onClick={() => router.back()}
-              className="w-9 h-9 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-gray-800 shadow-md active:scale-95 transition-transform"
+              className="w-10 h-10 rounded-2xl bg-white/90 backdrop-blur-md flex items-center justify-center text-gray-800 shadow-md hover:bg-white active:scale-95 transition-all"
             >
-              <ChevronLeft size={20} />
+              <ChevronLeft size={22} />
             </button>
             <button
               onClick={() => setLiked(!liked)}
-              className="w-9 h-9 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-md active:scale-95 transition-transform"
+              className="w-10 h-10 rounded-2xl bg-white/90 backdrop-blur-md flex items-center justify-center text-gray-800 shadow-md hover:bg-white active:scale-95 transition-all"
             >
-              <Heart
-                size={18}
-                className={liked ? 'fill-red-500 text-red-500' : 'text-gray-600'}
-              />
+              <Heart size={20} className={liked ? 'fill-red-500 text-red-500' : 'text-gray-700'} />
             </button>
           </div>
-        </div>
 
-        {/* Floating Restaurant Info Card with Generous Padding */}
-        <div className="page-px px-5 -mt-12 relative z-20">
-          <div className="bg-white rounded-2xl p-5 shadow-md border border-gray-100 flex items-center gap-4">
-            <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-50 border-2 border-white shadow-xs shrink-0">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={restaurant.avatarImg}
-                alt={restaurant.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="flex-1 min-w-0 pr-1">
-              <h1 className="text-base font-extrabold text-[#171717]">{restaurant.name}</h1>
-              <div className="flex items-center gap-2 mt-1.5 text-gray-600">
-                <div className="flex items-center gap-0.5">
-                  <Star size={13} className="fill-amber-400 text-amber-400" />
-                  <span className="text-xs font-bold text-[#171717]">{restaurant.rating}</span>
+          {/* Hero Restaurant Info Overlay */}
+          <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-white shadow-lg bg-white shrink-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={restaurant.avatarImg}
+                  alt={restaurant.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="text-white space-y-1">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-black drop-shadow-sm">
+                  {restaurant.name}
+                </h1>
+                <div className="flex items-center gap-3 text-xs sm:text-sm text-white/90 font-medium">
+                  <div className="flex items-center gap-1 bg-amber-400 text-amber-950 font-bold px-2 py-0.5 rounded-md text-xs">
+                    <Star size={12} className="fill-current" />
+                    <span>{restaurant.rating}</span>
+                  </div>
+                  <span>({restaurant.reviews} Ulasan)</span>
+                  <span>•</span>
+                  <div className="flex items-center gap-1">
+                    <Clock size={13} />
+                    <span>{restaurant.time}</span>
+                  </div>
                 </div>
-                <span className="text-xs text-gray-400">({restaurant.reviews})</span>
-                <span className="text-gray-300 text-xs">•</span>
-                <span className="text-xs text-gray-500">🛵 {restaurant.time}</span>
               </div>
             </div>
+
+            <span className="hidden sm:inline-block bg-white text-[#193CA5] font-extrabold text-xs px-4 py-2 rounded-xl shadow-md">
+              Gratis Ongkir s.d 10rb
+            </span>
           </div>
         </div>
 
         {/* Category Filter Pills */}
-        <div className="page-px px-5 pt-4">
-          <div className="flex items-center gap-2.5 overflow-x-auto no-scrollbar py-1">
-            {CATEGORIES.map(cat => {
-              const isActive = activeCategory === cat;
-              return (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-5 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
-                    isActive
-                      ? 'bg-[#193CA5] text-white shadow-xs'
-                      : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300'
-                  }`}
-                  style={{ paddingLeft: '16px', paddingRight: '16px' }}
-                >
-                  {cat}
-                </button>
-              );
-            })}
-          </div>
+        <div className="bg-white p-3 sm:p-4 rounded-2xl border border-gray-150 shadow-xs flex items-center gap-2.5 overflow-x-auto no-scrollbar">
+          {CATEGORIES.map(cat => {
+            const isActive = activeCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                  isActive
+                    ? 'bg-[#193CA5] text-white shadow-xs'
+                    : 'bg-gray-50 text-gray-600 border border-gray-200/80 hover:bg-gray-100 hover:text-gray-900'
+                }`}
+              >
+                {cat}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Section: Menu with Spacious Card Padding */}
-        <div className="page-px px-5 pt-4 pb-8">
-          <h2 className="text-sm font-bold text-[#171717] mb-3 px-1">Menu</h2>
+        {/* Menu Items Grid with Generous Spacing */}
+        <section className="bg-white rounded-3xl p-5 md:p-8 border border-gray-100 shadow-xs space-y-5">
+          <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+            <h2 className="text-base md:text-lg font-black text-[#111827]">
+              Daftar Menu Makanan ({filteredMenu.length})
+            </h2>
+            <span className="text-xs text-gray-400">Paling Laris</span>
+          </div>
 
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {filteredMenu.map(item => {
               const qty = getQty(item.id);
               return (
                 <div
                   key={item.id}
-                  className="bg-white rounded-2xl p-4 border border-gray-100 shadow-xs flex items-center gap-4 hover:border-blue-100 transition-all"
+                  className="bg-[#F8FAFC] hover:bg-white border border-gray-150 hover:border-blue-200 rounded-2xl p-4 sm:p-5 flex items-center justify-between gap-4 transition-all hover:shadow-md"
                 >
-                  <div className="w-16 h-16 rounded-xl overflow-hidden bg-gray-100 shrink-0 flex items-center justify-center text-2xl">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover"
-                      onError={e => {
-                        (e.target as HTMLElement).style.display = 'none';
-                      }}
-                    />
-                  </div>
-
-                  <div className="flex-1 min-w-0 pr-1">
-                    <h3 className="text-sm font-bold text-[#171717] truncate">{item.name}</h3>
-                    <p className="text-xs font-extrabold text-[#193CA5] mt-1">{fmt(item.price)}</p>
-                  </div>
-
-                  {/* Quantity Control or Add Button */}
-                  {qty > 0 ? (
-                    <div className="flex items-center gap-2.5 bg-[#EAF1FF] rounded-full px-2.5 py-1.5">
-                      <button
-                        onClick={() => updateQuantity(item.id, qty - 1)}
-                        className="w-6 h-6 rounded-full bg-white flex items-center justify-center text-[#193CA5] shadow-xs active:scale-95"
-                      >
-                        <Minus size={12} strokeWidth={2.5} />
-                      </button>
-                      <span className="text-xs font-bold text-[#193CA5] min-w-3 text-center">
-                        {qty}
-                      </span>
-                      <button
-                        onClick={() => updateQuantity(item.id, qty + 1)}
-                        className="w-6 h-6 rounded-full bg-[#193CA5] flex items-center justify-center text-white shadow-xs active:scale-95"
-                      >
-                        <Plus size={12} strokeWidth={2.5} />
-                      </button>
+                  <div className="flex items-center gap-4 min-w-0">
+                    <div className="w-18 h-18 sm:w-22 sm:h-22 rounded-2xl overflow-hidden bg-gray-100 shrink-0 shadow-inner">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
-                  ) : (
-                    <button
-                      onClick={() => handleAdd(item)}
-                      className="w-9 h-9 rounded-full bg-[#193CA5] hover:bg-[#15328A] active:scale-90 text-white flex items-center justify-center shadow-md shadow-[#193CA5]/25 transition-all"
-                    >
-                      <Plus size={16} strokeWidth={2.5} />
-                    </button>
-                  )}
+                    <div className="min-w-0 space-y-1">
+                      <h3 className="text-sm sm:text-base font-extrabold text-[#111827] truncate">
+                        {item.name}
+                      </h3>
+                      <p className="text-xs text-gray-500 line-clamp-1">{item.description}</p>
+                      <p className="text-sm font-black text-[#193CA5] pt-0.5">{fmt(item.price)}</p>
+                    </div>
+                  </div>
+
+                  {/* Add / Stepper Button */}
+                  <div className="shrink-0">
+                    {qty > 0 ? (
+                      <div className="flex items-center gap-2.5 bg-blue-50 border border-blue-200 rounded-xl px-2.5 py-1.5 shadow-xs">
+                        <button
+                          onClick={() => updateQuantity(item.id, qty - 1)}
+                          className="w-7 h-7 rounded-lg bg-white text-[#193CA5] border border-blue-200 flex items-center justify-center cursor-pointer active:scale-95 transition-all"
+                        >
+                          <Minus size={13} strokeWidth={2.5} />
+                        </button>
+                        <span className="text-xs font-black text-[#193CA5] min-w-4 text-center">
+                          {qty}
+                        </span>
+                        <button
+                          onClick={() => updateQuantity(item.id, qty + 1)}
+                          className="w-7 h-7 rounded-lg bg-[#193CA5] text-white flex items-center justify-center cursor-pointer active:scale-95 transition-all shadow-xs"
+                        >
+                          <Plus size={13} strokeWidth={2.5} />
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => handleAdd(item)}
+                        className="w-10 h-10 rounded-xl bg-[#193CA5] hover:bg-[#15328A] text-white flex items-center justify-center shadow-md shadow-[#193CA5]/25 active:scale-95 transition-all cursor-pointer"
+                        title="Tambah ke keranjang"
+                      >
+                        <Plus size={18} strokeWidth={2.5} />
+                      </button>
+                    )}
+                  </div>
                 </div>
               );
             })}
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
 
-      {/* Bottom CTA Bar */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] page-px px-5 py-4 bg-white border-t border-gray-100 z-50">
-        <Link href="/cart">
-          <button className="w-full bg-[#193CA5] hover:bg-[#15328A] active:scale-[0.98] text-white font-bold py-3.5 rounded-full text-sm transition-all shadow-md shadow-[#193CA5]/25 flex items-center justify-between px-5">
-            <span>
-              {totalItems > 0 ? `${totalItems} Menu Dipilih` : 'Tambahkan ke Keranjang'}
-            </span>
-            <span className="font-extrabold">
-              {totalItems > 0 ? fmt(totalPrice) : 'Lihat Keranjang &rsaquo;'}
-            </span>
-          </button>
-        </Link>
+      {/* ── BOTTOM CTA BAR (Responsive Desktop & Mobile) ── */}
+      <div className="fixed bottom-0 left-0 right-0 w-full px-4 sm:px-6 py-3.5 bg-white/95 backdrop-blur-md border-t border-gray-150 z-50 shadow-lg">
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#193CA5] flex items-center justify-center font-bold relative">
+              <ShoppingBag size={20} />
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </div>
+            <div>
+              <span className="text-xs text-gray-500 font-medium block">
+                {totalItems > 0 ? `${totalItems} Menu di keranjang` : 'Keranjang masih kosong'}
+              </span>
+              <span className="text-sm sm:text-base font-black text-[#193CA5]">
+                {totalItems > 0 ? fmt(totalPrice) : 'Rp 0'}
+              </span>
+            </div>
+          </div>
+
+          <Link href="/cart">
+            <button className="bg-[#193CA5] hover:bg-[#15328A] active:scale-[0.98] text-white font-extrabold px-6 py-3.5 rounded-2xl text-xs sm:text-sm transition-all shadow-md shadow-[#193CA5]/25 flex items-center gap-2 cursor-pointer">
+              Lihat Keranjang &rsaquo;
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );

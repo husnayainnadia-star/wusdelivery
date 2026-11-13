@@ -16,12 +16,10 @@ body {
 }
 
 .app-shell {
-  max-width: 390px;
-  margin: 0 auto;
+  width: 100%;
   min-height: 100vh;
-  background: #f5f6fa;
+  background: #f8fafc;
   position: relative;
-  box-shadow: 0 0 40px rgba(0,0,0,0.15);
 }
 
 /* Auth pages (sign-in, sign-up, forgot-password) fill full screen on desktop */
