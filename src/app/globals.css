@@ -24,6 +24,14 @@ body {
   box-shadow: 0 0 40px rgba(0,0,0,0.15);
 }
 
+/* Auth pages (sign-in, sign-up, forgot-password) fill full screen on desktop */
+.auth-page-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+}
+
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 

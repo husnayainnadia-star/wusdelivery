@@ -3,6 +3,7 @@ import './tailwind-built.css';
 import './globals.css';
 import { CartProvider } from '@/context/CartContext';
 import { AuthProvider } from '@/context/AuthContext';
+import AppShellWrapper from '@/components/shared/AppShellWrapper';
 
 export const metadata: Metadata = {
   title: 'WUSDelivery - Pesan, Kirim, Sampai!',
@@ -15,9 +16,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-sans antialiased bg-[#e8edf5]">
         <AuthProvider>
           <CartProvider>
-            <div className="app-shell shadow-2xl overflow-hidden min-h-screen">
+            <AppShellWrapper>
               {children}
-            </div>
+            </AppShellWrapper>
           </CartProvider>
         </AuthProvider>
       </body>

@@ -124,12 +124,19 @@ export default function WUSLogo({
           <line x1="35" y1="75" x2="135" y2="75" stroke={primaryColor} strokeWidth="2.5" strokeLinecap="round" opacity="0.8" />
         </g>
 
-        {/* WUS text */}
-        <g fill={primaryColor}>
-          <path d="M36 83L43 83L49 101L55 83L62 83L54 105L45 105L40 91L34 105L26 105L36 83Z" />
-          <path d="M68 83L77 83L77 97C77 101 81 103 86 103C91 103 94 101 94 97L94 83L103 83L103 97C103 106 96 110 86 110C76 110 68 106 68 97L68 83Z" />
-          <path d="M110 88C110 85 113 83 118 83C124 83 128 85 130 89L122 92C121 90 120 89 118 89C116 89 115 90 115 91C115 93 117 94 122 95C129 97 133 99 133 104C133 108 128 111 120 111C113 111 108 108 107 103L115 100C116 103 118 104 120 104C123 104 125 103 125 101C125 99 123 98 119 97C112 95 110 93 110 88Z" />
-        </g>
+        {/* WUS text — rendered as SVG text for reliable cross-browser display */}
+        <text
+          x="80"
+          y="108"
+          textAnchor="middle"
+          fill={primaryColor}
+          fontSize="30"
+          fontWeight="900"
+          fontFamily="system-ui, -apple-system, Arial, sans-serif"
+          letterSpacing="4"
+        >
+          WUS
+        </text>
 
         {/* DELIVERY Banner */}
         {showSubtitle && (
